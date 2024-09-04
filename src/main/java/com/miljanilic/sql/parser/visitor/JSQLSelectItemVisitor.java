@@ -1,5 +1,7 @@
 package com.miljanilic.sql.parser.visitor;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.miljanilic.sql.ast.expression.Expression;
 import com.miljanilic.sql.ast.node.Select;
 import com.miljanilic.sql.ast.node.SimpleSelect;
@@ -7,9 +9,11 @@ import net.sf.jsqlparser.expression.ExpressionVisitor;
 import net.sf.jsqlparser.statement.select.SelectItem;
 import net.sf.jsqlparser.statement.select.SelectItemVisitorAdapter;
 
+@Singleton
 public class JSQLSelectItemVisitor extends SelectItemVisitorAdapter<Select> {
     private final ExpressionVisitor<Expression> expressionVisitor;
 
+    @Inject
     public JSQLSelectItemVisitor(ExpressionVisitor<Expression> expressionVisitor) {
         this.expressionVisitor = expressionVisitor;
     }

@@ -1,5 +1,7 @@
 package com.miljanilic.sql.parser.visitor;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.miljanilic.sql.ast.clause.*;
 import com.miljanilic.sql.ast.expression.Expression;
 import com.miljanilic.sql.ast.expression.ExpressionList;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Singleton
 public class JSQLSelectVisitor extends SelectVisitorAdapter<Statement> {
     private final SelectItemVisitor<Select> selectItemVisitor;
     private final FromItemVisitor<From> fromItemVisitor;
@@ -24,6 +27,7 @@ public class JSQLSelectVisitor extends SelectVisitorAdapter<Statement> {
     private final ExpressionVisitor<Expression> expressionVisitor;
     private final JSQLJoinTypeResolver joinTypeResolver;
 
+    @Inject
     public JSQLSelectVisitor(
             SelectItemVisitor<Select> selectItemVisitor,
             FromItemVisitor<From> fromItemVisitor,
