@@ -19,7 +19,7 @@ public class StringValue extends Expression {
 
     @Override
     public String toString() {
-        return "StringValueExpression{" +
+        return "StringValue{" +
                 "value='" + value + '\'' +
                 '}';
     }

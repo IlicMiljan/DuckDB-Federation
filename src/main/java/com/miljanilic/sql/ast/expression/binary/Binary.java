@@ -25,7 +25,7 @@ public abstract class Binary extends Expression {
 
     @Override
     public String toString() {
-        return "BinaryExpression{" +
+        return "Binary{" +
                 "left=" + left +
                 ", right=" + right +
                 '}';

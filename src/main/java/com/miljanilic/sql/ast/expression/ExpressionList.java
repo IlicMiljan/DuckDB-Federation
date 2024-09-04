@@ -22,7 +22,7 @@ public class ExpressionList extends Expression {
 
     @Override
     public String toString() {
-        return "MultiExpressionList{" +
+        return "ExpressionList{" +
                 "expressions=" + expressions +
                 '}';
     }
