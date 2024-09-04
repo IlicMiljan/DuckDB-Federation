@@ -16,6 +16,10 @@ public class JSQLOrderByVisitor implements OrderByVisitor<OrderBy> {
 
     @Override
     public <S> OrderBy visit(OrderByElement orderByElement, S context) {
+        if (orderByElement.getNullOrdering() != null) {
+            throw new UnsupportedOperationException("NULL ordering in ORDER BY is not supported.");
+        }
+
         return new SimpleOrderBy(orderByElement.getExpression().accept(this.expressionVisitor, context), orderByElement.isAsc());
     }
 }

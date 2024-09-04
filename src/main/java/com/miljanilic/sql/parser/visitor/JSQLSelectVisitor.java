@@ -8,6 +8,7 @@ import com.miljanilic.sql.ast.node.Join;
 import com.miljanilic.sql.ast.node.Select;
 import com.miljanilic.sql.ast.statement.SelectStatement;
 import com.miljanilic.sql.ast.statement.Statement;
+import com.miljanilic.sql.parser.resolver.JSQLJoinTypeResolver;
 import net.sf.jsqlparser.expression.ExpressionVisitor;
 import net.sf.jsqlparser.statement.select.*;
 
@@ -21,19 +22,22 @@ public class JSQLSelectVisitor extends SelectVisitorAdapter<Statement> {
     private final GroupByVisitor<GroupBy> groupByVisitor;
     private final OrderByVisitor<OrderBy> orderByVisitor;
     private final ExpressionVisitor<Expression> expressionVisitor;
+    private final JSQLJoinTypeResolver joinTypeResolver;
 
     public JSQLSelectVisitor(
             SelectItemVisitor<Select> selectItemVisitor,
             FromItemVisitor<From> fromItemVisitor,
             GroupByVisitor<GroupBy> groupByVisitor,
             OrderByVisitor<OrderBy> orderByVisitor,
-            ExpressionVisitor<Expression> expressionVisitor
+            ExpressionVisitor<Expression> expressionVisitor,
+            JSQLJoinTypeResolver joinTypeResolver
     ) {
         this.selectItemVisitor = selectItemVisitor;
         this.fromItemVisitor = fromItemVisitor;
         this.groupByVisitor = groupByVisitor;
         this.orderByVisitor = orderByVisitor;
         this.expressionVisitor = expressionVisitor;
+        this.joinTypeResolver = joinTypeResolver;
     }
 
     @Override
@@ -77,7 +81,11 @@ public class JSQLSelectVisitor extends SelectVisitorAdapter<Statement> {
                         expressions.add(expression.accept(this.expressionVisitor, context));
                     }
 
-                    return new SimpleJoin(SimpleJoin.JoinType.INNER, join.getFromItem().accept(this.fromItemVisitor, context), new ExpressionList(expressions));
+                    return new SimpleJoin(
+                            this.joinTypeResolver.resolveJoinType(join),
+                            join.getFromItem().accept(this.fromItemVisitor, context),
+                            new ExpressionList(expressions)
+                    );
                 })
                 .collect(Collectors.toList());
     }

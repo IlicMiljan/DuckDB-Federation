@@ -17,6 +17,10 @@ public class JSQLGroupByVisitor implements GroupByVisitor<GroupBy> {
 
     @Override
     public <S> GroupBy visit(GroupByElement groupByElement, S context) {
+        if (!groupByElement.getGroupingSets().isEmpty()) {
+            throw new UnsupportedOperationException("GROUPING SETS are not supported.");
+        }
+
         ExpressionList<?> expressionList = (ExpressionList<?>) groupByElement.getGroupByExpressionList();
         return new SimpleGroupBy(expressionList.accept(expressionVisitor, context));
     }

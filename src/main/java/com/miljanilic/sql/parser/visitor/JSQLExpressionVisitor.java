@@ -24,7 +24,10 @@ public class JSQLExpressionVisitor extends ExpressionVisitorAdapter<Expression> 
 
     @Override
     public <S> Expression visit(net.sf.jsqlparser.schema.Column column, S context) {
-        return new Column(column.getColumnName(), column.getTable().accept(this.fromItemVisitor, context));
+        return new Column(
+                column.getColumnName(),
+                column.getTable() != null ? column.getTable().accept(this.fromItemVisitor, context) : null
+        );
     }
 
     @Override
