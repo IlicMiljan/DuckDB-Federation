@@ -1,5 +1,7 @@
 package com.miljanilic.sql.parser.visitor;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.miljanilic.sql.ast.expression.Expression;
 import com.miljanilic.sql.ast.node.GroupBy;
 import com.miljanilic.sql.ast.node.SimpleGroupBy;
@@ -8,9 +10,11 @@ import net.sf.jsqlparser.expression.operators.relational.ExpressionList;
 import net.sf.jsqlparser.statement.select.GroupByElement;
 import net.sf.jsqlparser.statement.select.GroupByVisitor;
 
+@Singleton
 public class JSQLGroupByVisitor implements GroupByVisitor<GroupBy> {
     private final ExpressionVisitor<Expression> expressionVisitor;
 
+    @Inject
     public JSQLGroupByVisitor(ExpressionVisitor<Expression> expressionVisitor) {
         this.expressionVisitor = expressionVisitor;
     }

@@ -1,5 +1,7 @@
 package com.miljanilic.sql.parser;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.miljanilic.sql.ast.expression.Expression;
 import com.miljanilic.sql.ast.node.*;
 import com.miljanilic.sql.ast.node.Select;
@@ -11,7 +13,14 @@ import net.sf.jsqlparser.expression.*;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.select.*;
 
+@Singleton
 public class JSQLParser implements SQLParser {
+    private final SelectVisitor<Statement> selectVisitor;
+
+    @Inject
+    public JSQLParser(SelectVisitor<Statement> selectVisitor) {
+        this.selectVisitor = selectVisitor;
+    }
 
     public Statement parse(String sql) {
         try {
@@ -28,23 +37,6 @@ public class JSQLParser implements SQLParser {
     }
 
     public Statement visit(net.sf.jsqlparser.statement.select.Select select) {
-        PlainSelect plainSelect = select.getPlainSelect();
-
-        FromItemVisitor<From> fromItemVisitor = new JSQLFromItemVisitor();
-        ExpressionVisitor<Expression> expressionVisitor = new JSQLExpressionVisitor(fromItemVisitor);
-        SelectItemVisitor<Select> selectItemVisitor = new JSQLSelectItemVisitor(expressionVisitor);
-        GroupByVisitor<GroupBy> groupByVisitor = new JSQLGroupByVisitor(expressionVisitor);
-        OrderByVisitor<OrderBy> orderByVisitor = new JSQLOrderByVisitor(expressionVisitor);
-        JSQLJoinTypeResolver joinTypeResolver = new JSQLJoinTypeResolver();
-        SelectVisitor<Statement> selectVisitor = new JSQLSelectVisitor(
-                selectItemVisitor,
-                fromItemVisitor,
-                groupByVisitor,
-                orderByVisitor,
-                expressionVisitor,
-                joinTypeResolver
-        );
-
-        return plainSelect.accept(selectVisitor, null);
+        return select.getPlainSelect().accept(this.selectVisitor, null);
     }
 }

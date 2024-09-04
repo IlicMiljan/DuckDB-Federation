@@ -1,5 +1,7 @@
 package com.miljanilic.sql.parser.visitor;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.miljanilic.sql.ast.expression.*;
 import com.miljanilic.sql.ast.expression.binary.*;
 import com.miljanilic.sql.ast.node.From;
@@ -15,9 +17,11 @@ import net.sf.jsqlparser.statement.select.FromItemVisitor;
 import java.util.ArrayList;
 import java.util.List;
 
+@Singleton
 public class JSQLExpressionVisitor extends ExpressionVisitorAdapter<Expression> {
     private final FromItemVisitor<From> fromItemVisitor;
 
+    @Inject
     public JSQLExpressionVisitor(FromItemVisitor<From> fromItemVisitor) {
         this.fromItemVisitor = fromItemVisitor;
     }
