@@ -12,6 +12,17 @@
         <maven.compiler.source>22</maven.compiler.source>
         <maven.compiler.target>22</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <inject.version>7.0.0</inject.version>
     </properties>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.google.inject/guice -->
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>${inject.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
