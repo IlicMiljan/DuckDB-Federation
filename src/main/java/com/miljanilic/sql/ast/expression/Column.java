@@ -1,23 +1,23 @@
 package com.miljanilic.sql.ast.expression;
 
 import com.miljanilic.sql.ast.ASTVisitor;
-import com.miljanilic.sql.ast.node.Table;
+import com.miljanilic.sql.ast.node.From;
 
 public class Column extends Expression {
     private final String name;
-    private final Table table;
+    private final From from;
 
-    public Column(String name, Table table) {
+    public Column(String name, From from) {
         this.name = name;
-        this.table = table;
+        this.from = from;
     }
 
     public String getName() {
         return name;
     }
 
-    public Table getTable() {
-        return table;
+    public From getFrom() {
+        return from;
     }
 
     @Override
@@ -27,9 +27,9 @@ public class Column extends Expression {
 
     @Override
     public String toString() {
-        return "ColumnExpression{" +
+        return "Column{" +
                 "name='" + name + '\'' +
-                ", table=" + table +
+                ", from=" + from +
                 '}';
     }
 }
