@@ -16,7 +16,7 @@ public abstract class Comparison extends Binary {
 
     @Override
     public String toString() {
-        return "ComparisonExpression{" +
+        return "Comparison{" +
                 "left=" + super.getLeft() +
                 ", right=" + super.getRight() +
                 ", operator='" + operator + '\'' +
