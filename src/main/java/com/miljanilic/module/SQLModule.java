@@ -1,4 +1,4 @@
-package module;
+package com.miljanilic.module;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
