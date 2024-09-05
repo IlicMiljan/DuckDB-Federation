@@ -5,5 +5,5 @@ import com.miljanilic.sql.ast.ASTVisitor;
 
 public abstract class Node implements ASTNode {
     @Override
-    public abstract <T> T accept(ASTVisitor<T> visitor);
+    public abstract <T, S> T accept(ASTVisitor<T, S> visitor, S context);
 }
