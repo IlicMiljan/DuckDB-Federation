@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <inject.version>7.0.0</inject.version>
+        <jsqlparser.version>5.0</jsqlparser.version>
     </properties>
 
     <dependencies>
@@ -22,6 +23,13 @@
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
             <version>${inject.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.github.jsqlparser/jsqlparser -->
+        <dependency>
+            <groupId>com.github.jsqlparser</groupId>
+            <artifactId>jsqlparser</artifactId>
+            <version>${jsqlparser.version}</version>
         </dependency>
     </dependencies>
 
