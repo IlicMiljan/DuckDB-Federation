@@ -1,5 +1,5 @@
 package com.miljanilic.sql.ast;
 
 public interface ASTNode {
-    <T> T accept(ASTVisitor<T> visitor);
+    <T, S> T accept(ASTVisitor<T, S> visitor, S context);
 }
