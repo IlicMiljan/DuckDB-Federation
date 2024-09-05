@@ -21,8 +21,8 @@ public class Column extends Expression {
     }
 
     @Override
-    public <T> T accept(ASTVisitor<T> visitor) {
-        return visitor.visit(this);
+    public <T, S> T accept(ASTVisitor<T, S> visitor, S context) {
+        return visitor.visit(this, context);
     }
 
     @Override
