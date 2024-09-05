@@ -2,7 +2,7 @@ package com.miljanilic;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import module.SQLModule;
+import com.miljanilic.module.SQLModule;
 
 public class Main {
     public static void main(String[] args) {
