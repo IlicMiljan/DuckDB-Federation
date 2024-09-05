@@ -15,7 +15,9 @@ import net.sf.jsqlparser.expression.ExpressionVisitor;
 import net.sf.jsqlparser.statement.select.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -47,16 +49,21 @@ public class JSQLSelectVisitor extends SelectVisitorAdapter<Statement> {
     @Override
     public <S> Statement visit(PlainSelect plainSelect, S context) {
         SelectClause selectClause = new SelectClause(this.visitSelectItems(plainSelect.getSelectItems(), context));
-        FromClause fromClause = new FromClause(plainSelect.getFromItem().accept(this.fromItemVisitor, context));
+        FromClause fromClause = Optional.ofNullable(plainSelect.getFromItem())
+                .map(item -> new FromClause(item.accept(this.fromItemVisitor, context)))
+                .orElse(null);
         JoinClause joinClause = new JoinClause(this.visitJoinItems(plainSelect.getJoins(), context));
-        WhereClause whereClause = new WhereClause(plainSelect.getWhere().accept(this.expressionVisitor, context));
-        GroupByClause groupByClause = new GroupByClause(plainSelect.getGroupBy().accept(this.groupByVisitor, context));
-        HavingClause havingClause = new HavingClause(plainSelect.getHaving().accept(this.expressionVisitor, context));
+        WhereClause whereClause = Optional.ofNullable(plainSelect.getWhere())
+                .map(where -> new WhereClause(where.accept(this.expressionVisitor, context)))
+                .orElse(null);
+        GroupByClause groupByClause = Optional.ofNullable(plainSelect.getGroupBy())
+                .map(groupBy -> new GroupByClause(groupBy.accept(this.groupByVisitor, context)))
+                .orElse(null);
+        HavingClause havingClause = Optional.ofNullable(plainSelect.getHaving())
+                .map(having -> new HavingClause(having.accept(this.expressionVisitor, context)))
+                .orElse(null);
         OrderByClause orderByClause = new OrderByClause(this.visitOrderByElements(plainSelect.getOrderByElements(), context));
-        LimitClause limitClause = new LimitClause(
-                plainSelect.getLimit().getRowCount().accept(this.expressionVisitor, context),
-                plainSelect.getLimit().getOffset() != null ? plainSelect.getLimit().getOffset().accept(this.expressionVisitor, context) : null
-        );
+        LimitClause limitClause = this.createLimitClause(plainSelect.getLimit(), context);
 
         return new SelectStatement(
                 selectClause,
@@ -71,23 +78,29 @@ public class JSQLSelectVisitor extends SelectVisitorAdapter<Statement> {
     }
 
     private <S> List<Select> visitSelectItems(List<SelectItem<?>> selectItems, S context) {
-        return selectItems.stream()
+        return Optional.ofNullable(selectItems)
+                .orElse(Collections.emptyList())
+                .stream()
                 .map(item -> item.accept(this.selectItemVisitor, context))
                 .collect(Collectors.toList());
     }
 
     private <S> List<Join> visitJoinItems(List<net.sf.jsqlparser.statement.select.Join> joins, S context) {
-        return joins.stream()
+        return Optional.ofNullable(joins)
+                .orElse(Collections.emptyList())
+                .stream()
                 .map(join -> {
-                    List<Expression> expressions = new ArrayList<>();
-
-                    for (net.sf.jsqlparser.expression.Expression expression : join.getOnExpressions()) {
-                        expressions.add(expression.accept(this.expressionVisitor, context));
-                    }
+                    List<Expression> expressions = Optional.ofNullable(join.getOnExpressions())
+                            .orElse(Collections.emptyList())
+                            .stream()
+                            .map(expression -> expression.accept(this.expressionVisitor, context))
+                            .collect(Collectors.toList());
 
                     return new SimpleJoin(
                             this.joinTypeResolver.resolveJoinType(join),
-                            join.getFromItem().accept(this.fromItemVisitor, context),
+                            Optional.ofNullable(join.getFromItem())
+                                    .map(item -> item.accept(this.fromItemVisitor, context))
+                                    .orElse(null),
                             new ExpressionList(expressions)
                     );
                 })
@@ -95,8 +108,26 @@ public class JSQLSelectVisitor extends SelectVisitorAdapter<Statement> {
     }
 
     private <S> List<OrderBy> visitOrderByElements(List<OrderByElement> orderByElements, S context) {
-        return orderByElements.stream()
+        return Optional.ofNullable(orderByElements)
+                .orElse(Collections.emptyList())
+                .stream()
                 .map(orderByElement -> orderByElement.accept(this.orderByVisitor, context))
-                .toList();
+                .collect(Collectors.toList());
+    }
+
+    private <S> LimitClause createLimitClause(Limit limit, S context) {
+        if (limit == null) {
+            return null;
+        }
+
+        Expression rowCount = Optional.ofNullable(limit.getRowCount())
+                .map(count -> count.accept(this.expressionVisitor, context))
+                .orElse(null);
+
+        Expression offset = Optional.ofNullable(limit.getOffset())
+                .map(off -> off.accept(this.expressionVisitor, context))
+                .orElse(null);
+
+        return new LimitClause(rowCount, offset);
     }
 }
