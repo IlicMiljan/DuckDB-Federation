@@ -21,7 +21,7 @@ public abstract class Binary extends Expression {
     }
 
     @Override
-    public abstract <T> T accept(ASTVisitor<T> visitor);
+    public abstract <T, S> T accept(ASTVisitor<T, S> visitor, S context);
 
     @Override
     public String toString() {
