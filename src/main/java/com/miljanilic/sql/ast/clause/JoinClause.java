@@ -6,14 +6,14 @@ import com.miljanilic.sql.ast.node.Join;
 import java.util.List;
 
 public class JoinClause extends Clause {
-    private final List<Join> joins;
+    private final List<Join> joinList;
 
     public JoinClause(List<Join> joins) {
-        this.joins = joins;
+        this.joinList = joins;
     }
 
-    public List<Join> getJoins() {
-        return joins;
+    public List<Join> getJoinList() {
+        return joinList;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class JoinClause extends Clause {
     @Override
     public String toString() {
         return "JoinClause{" +
-                "joins=" + joins +
+                "joinList=" + joinList +
                 '}';
     }
 }
