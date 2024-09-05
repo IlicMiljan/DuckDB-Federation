@@ -6,56 +6,56 @@ import com.miljanilic.sql.ast.expression.binary.*;
 import com.miljanilic.sql.ast.node.*;
 import com.miljanilic.sql.ast.statement.SelectStatement;
 
-public interface ASTVisitor<T> {
+public interface ASTVisitor<T, S> {
     // Statement
-    T visit(SelectStatement statement);
+    T visit(SelectStatement statement, S context);
 
     // Clauses (in typical SQL order)
-    T visit(SelectClause clause);
-    T visit(FromClause clause);
-    T visit(JoinClause clause);
-    T visit(WhereClause clause);
-    T visit(GroupByClause clause);
-    T visit(HavingClause clause);
-    T visit(OrderByClause clause);
-    T visit(LimitClause clause);
+    T visit(SelectClause clause, S context);
+    T visit(FromClause clause, S context);
+    T visit(JoinClause clause, S context);
+    T visit(WhereClause clause, S context);
+    T visit(GroupByClause clause, S context);
+    T visit(HavingClause clause, S context);
+    T visit(OrderByClause clause, S context);
+    T visit(LimitClause clause, S context);
 
     // Table-related
-    T visit(Table table);
-    T visit(SimpleJoin expression);
+    T visit(Table table, S context);
+    T visit(SimpleJoin expression, S context);
 
     // Column and Function
-    T visit(Column expression);
-    T visit(Function expression);
+    T visit(Column expression, S context);
+    T visit(Function expression, S context);
 
     // Literals
-    T visit(LongValue expression);
-    T visit(StringValue expression);
+    T visit(LongValue expression, S context);
+    T visit(StringValue expression, S context);
 
     // Comparison Operators
-    T visit(EqualsTo expression);
-    T visit(NotEqualsTo expression);
-    T visit(GreaterThan expression);
-    T visit(GreaterThanEquals expression);
-    T visit(LessThan expression);
-    T visit(LessThanEquals expression);
+    T visit(EqualsTo expression, S context);
+    T visit(NotEqualsTo expression, S context);
+    T visit(GreaterThan expression, S context);
+    T visit(GreaterThanEquals expression, S context);
+    T visit(LessThan expression, S context);
+    T visit(LessThanEquals expression, S context);
 
     // Logical Operators
-    T visit(AndOperator expression);
-    T visit(OrOperator expression);
+    T visit(AndOperator expression, S context);
+    T visit(OrOperator expression, S context);
 
     // Arithmetic Operators
-    T visit(Addition expression);
-    T visit(Subtraction expression);
-    T visit(Multiplication expression);
-    T visit(Division expression);
-    T visit(Modulo expression);
+    T visit(Addition expression, S context);
+    T visit(Subtraction expression, S context);
+    T visit(Multiplication expression, S context);
+    T visit(Division expression, S context);
+    T visit(Modulo expression, S context);
 
     // Other Expressions
-    T visit(ExpressionList expression);
+    T visit(ExpressionList expression, S context);
 
     // Simple Clause Implementations
-    T visit(SimpleSelect table);
-    T visit(SimpleOrderBy table);
-    T visit(SimpleGroupBy expression);
+    T visit(SimpleSelect table, S context);
+    T visit(SimpleOrderBy table, S context);
+    T visit(SimpleGroupBy expression, S context);
 }
