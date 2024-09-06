@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.miljanilic.catalog.data.Schema;
 import com.miljanilic.catalog.data.Table;
+import com.miljanilic.catalog.loader.SchemaLoader;
 
 import java.util.List;
 

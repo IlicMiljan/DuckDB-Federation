@@ -1,4 +1,4 @@
-package com.miljanilic.catalog;
+package com.miljanilic.catalog.exception;
 
 public class FailedLoadingSchemaException extends RuntimeException {
     public FailedLoadingSchemaException(String message) {

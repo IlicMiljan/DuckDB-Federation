@@ -1,11 +1,12 @@
-package com.miljanilic.catalog;
+package com.miljanilic.catalog.loader;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Singleton;
 import com.miljanilic.catalog.data.Schema;
+import com.miljanilic.catalog.exception.FailedLoadingSchemaException;
+import com.miljanilic.catalog.exception.FailedParsingSchemaException;
 
 import java.io.*;
-import java.nio.file.*;
 import java.util.*;
 import java.net.URL;
 
