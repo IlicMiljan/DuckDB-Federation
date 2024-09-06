@@ -13,8 +13,8 @@ public interface SchemaRepository {
     Schema getSchema(String schemaName);
 
     // Fetch all tables in a specific schema
-    List<Table> getSchemaTables(String schemaName);
+    List<Table> getTables(String schemaName);
 
     // Fetch a specific table or view by name in a specific schema
-    Table getSchemaTable(String schemaName, String tableName);
+    Table getTable(String schemaName, String tableName);
 }
