@@ -30,13 +30,13 @@ public class InMemorySchemaRepository implements SchemaRepository {
     }
 
     @Override
-    public List<Table> getSchemaTables(String schemaName) {
+    public List<Table> getTables(String schemaName) {
         Schema schema = getSchema(schemaName);
         return schema != null ? schema.getTables() : null;
     }
 
     @Override
-    public Table getSchemaTable(String schemaName, String tableName) {
+    public Table getTable(String schemaName, String tableName) {
         Schema schema = getSchema(schemaName);
         if (schema != null) {
             return schema.getTables().stream()
