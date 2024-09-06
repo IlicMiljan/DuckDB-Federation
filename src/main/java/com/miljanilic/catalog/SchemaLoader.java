@@ -51,7 +51,6 @@ public class SchemaLoader {
         try {
             return objectMapper.readValue(file, Schema.class);
         } catch (IOException e) {
-            e.printStackTrace();
            throw new FailedParsingSchemaException("Failed parsing schema from file: " + file.getName(), e);
         }
     }
