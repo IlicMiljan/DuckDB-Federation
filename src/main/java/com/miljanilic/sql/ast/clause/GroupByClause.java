@@ -2,7 +2,6 @@ package com.miljanilic.sql.ast.clause;
 
 import com.miljanilic.sql.ast.ASTVisitor;
 import com.miljanilic.sql.ast.node.GroupBy;
-import com.miljanilic.sql.ast.node.Node;
 
 public class GroupByClause extends Clause {
     private final GroupBy groupBy;
