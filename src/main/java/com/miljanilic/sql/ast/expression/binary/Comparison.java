@@ -3,7 +3,7 @@ package com.miljanilic.sql.ast.expression.binary;
 import com.miljanilic.sql.ast.expression.Expression;
 
 public abstract class Comparison extends Binary {
-    public Comparison(Expression left, Expression right, String operator) {
+    public Comparison(Expression left, String operator, Expression right) {
         super(left, operator, right);
     }
 

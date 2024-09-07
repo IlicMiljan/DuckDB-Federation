@@ -7,7 +7,7 @@ public class GreaterThanEquals extends Comparison {
     private static final String OPERATOR = ">=";
 
     public GreaterThanEquals(Expression left, Expression right) {
-        super(left, right, OPERATOR);
+        super(left, OPERATOR, right);
     }
 
     @Override
