@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.miljanilic.sql.ast.expression.Expression;
 import com.miljanilic.sql.ast.node.OrderBy;
-import com.miljanilic.sql.ast.node.SimpleOrderBy;
 import net.sf.jsqlparser.expression.ExpressionVisitor;
 import net.sf.jsqlparser.statement.select.OrderByElement;
 import net.sf.jsqlparser.statement.select.OrderByVisitor;
@@ -24,6 +23,6 @@ public class JSQLOrderByVisitor implements OrderByVisitor<OrderBy> {
             throw new UnsupportedOperationException("NULL ordering in ORDER BY is not supported.");
         }
 
-        return new SimpleOrderBy(orderByElement.getExpression().accept(this.expressionVisitor, context), orderByElement.isAsc());
+        return new OrderBy(orderByElement.getExpression().accept(this.expressionVisitor, context), orderByElement.isAsc());
     }
 }
