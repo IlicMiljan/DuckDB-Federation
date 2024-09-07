@@ -5,7 +5,7 @@ import com.google.inject.Singleton;
 import com.miljanilic.sql.ast.statement.Statement;
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
-import net.sf.jsqlparser.statement.select.*;
+import net.sf.jsqlparser.statement.select.SelectVisitor;
 
 @Singleton
 public class JSQLParser implements SQLParser {
