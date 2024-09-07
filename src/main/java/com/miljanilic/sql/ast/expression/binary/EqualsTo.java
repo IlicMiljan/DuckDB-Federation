@@ -7,7 +7,7 @@ public class EqualsTo extends Comparison {
     private static final String OPERATOR = "=";
 
     public EqualsTo(Expression left, Expression right) {
-        super(left, right, OPERATOR);
+        super(left, OPERATOR, right);
     }
 
     @Override
