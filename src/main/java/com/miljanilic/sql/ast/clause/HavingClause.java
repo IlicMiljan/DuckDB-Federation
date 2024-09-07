@@ -20,8 +20,6 @@ public class HavingClause extends Clause {
 
     @Override
     public String toString() {
-        return "HavingClause{" +
-                "condition=" + condition +
-                '}';
+        return "HAVING " + condition;
     }
 }

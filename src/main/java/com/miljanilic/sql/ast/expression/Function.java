@@ -26,9 +26,6 @@ public class Function extends Expression {
 
     @Override
     public String toString() {
-        return "Function{" +
-                "functionName='" + functionName + '\'' +
-                ", arguments=" + arguments +
-                '}';
+        return functionName + "(" + arguments + ")";
     }
 }

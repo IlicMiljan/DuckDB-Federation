@@ -19,8 +19,6 @@ public class LongValue extends Expression {
 
     @Override
     public String toString() {
-        return "LongValue{" +
-                "value=" + value +
-                '}';
+        return value.toString();
     }
 }

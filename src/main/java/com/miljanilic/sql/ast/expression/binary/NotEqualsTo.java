@@ -7,7 +7,7 @@ public class NotEqualsTo extends Comparison {
     private static final String OPERATOR = "<>";
 
     public NotEqualsTo(Expression left, Expression right) {
-        super(left, right, OPERATOR);
+        super(left, OPERATOR, right);
     }
 
     @Override

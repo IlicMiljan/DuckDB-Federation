@@ -72,15 +72,17 @@ public class SelectStatement extends Statement {
 
     @Override
     public String toString() {
-        return "SelectStatement{" +
-                "selectClause=" + selectClause +
-                ", fromClause=" + fromClause +
-                ", joinClause=" + joinClause +
-                ", whereClause=" + whereClause +
-                ", groupByClause=" + groupByClause +
-                ", havingClause=" + havingClause +
-                ", orderByClause=" + orderByClause +
-                ", limitClause=" + limitClause +
-                '}';
+        StringBuilder sb = new StringBuilder("SELECT ");
+
+        sb.append(selectClause).append("\n");
+        sb.append("FROM ").append(fromClause).append("\n");
+        if (joinClause != null) sb.append(joinClause).append("\n");
+        if (whereClause != null) sb.append(whereClause).append("\n");
+        if (groupByClause != null) sb.append(groupByClause).append("\n");
+        if (havingClause != null) sb.append(havingClause).append("\n");
+        if (orderByClause != null) sb.append(orderByClause).append("\n");
+        if (limitClause != null) sb.append(limitClause);
+
+        return sb.toString();
     }
 }

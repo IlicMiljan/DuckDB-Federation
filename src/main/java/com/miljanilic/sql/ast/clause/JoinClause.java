@@ -4,6 +4,7 @@ import com.miljanilic.sql.ast.ASTVisitor;
 import com.miljanilic.sql.ast.node.Join;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class JoinClause extends Clause {
     private final List<Join> joinList;
@@ -23,8 +24,8 @@ public class JoinClause extends Clause {
 
     @Override
     public String toString() {
-        return "JoinClause{" +
-                "joinList=" + joinList +
-                '}';
+        return joinList.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining("\n"));
     }
 }

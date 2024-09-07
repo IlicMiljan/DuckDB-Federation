@@ -5,16 +5,15 @@ import com.google.inject.Singleton;
 import com.miljanilic.sql.ast.clause.*;
 import com.miljanilic.sql.ast.expression.Expression;
 import com.miljanilic.sql.ast.expression.ExpressionList;
-import com.miljanilic.sql.ast.node.*;
 import com.miljanilic.sql.ast.node.Join;
 import com.miljanilic.sql.ast.node.Select;
+import com.miljanilic.sql.ast.node.*;
 import com.miljanilic.sql.ast.statement.SelectStatement;
 import com.miljanilic.sql.ast.statement.Statement;
 import com.miljanilic.sql.parser.resolver.JSQLJoinTypeResolver;
 import net.sf.jsqlparser.expression.ExpressionVisitor;
 import net.sf.jsqlparser.statement.select.*;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -96,7 +95,7 @@ public class JSQLSelectVisitor extends SelectVisitorAdapter<Statement> {
                             .map(expression -> expression.accept(this.expressionVisitor, context))
                             .collect(Collectors.toList());
 
-                    return new SimpleJoin(
+                    return new Join(
                             this.joinTypeResolver.resolveJoinType(join),
                             Optional.ofNullable(join.getFromItem())
                                     .map(item -> item.accept(this.fromItemVisitor, context))

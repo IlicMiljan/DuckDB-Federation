@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.miljanilic.sql.ast.expression.Expression;
 import com.miljanilic.sql.ast.node.GroupBy;
-import com.miljanilic.sql.ast.node.SimpleGroupBy;
 import net.sf.jsqlparser.expression.ExpressionVisitor;
 import net.sf.jsqlparser.expression.operators.relational.ExpressionList;
 import net.sf.jsqlparser.statement.select.GroupByElement;
@@ -26,6 +25,6 @@ public class JSQLGroupByVisitor implements GroupByVisitor<GroupBy> {
         }
 
         ExpressionList<?> expressionList = (ExpressionList<?>) groupByElement.getGroupByExpressionList();
-        return new SimpleGroupBy(expressionList.accept(expressionVisitor, context));
+        return new GroupBy(expressionList.accept(expressionVisitor, context));
     }
 }

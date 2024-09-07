@@ -2,16 +2,10 @@ package com.miljanilic.sql.parser;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.miljanilic.sql.ast.expression.Expression;
-import com.miljanilic.sql.ast.node.*;
-import com.miljanilic.sql.ast.node.Select;
 import com.miljanilic.sql.ast.statement.Statement;
-import com.miljanilic.sql.parser.resolver.JSQLJoinTypeResolver;
-import com.miljanilic.sql.parser.visitor.*;
 import net.sf.jsqlparser.JSQLParserException;
-import net.sf.jsqlparser.expression.*;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
-import net.sf.jsqlparser.statement.select.*;
+import net.sf.jsqlparser.statement.select.SelectVisitor;
 
 @Singleton
 public class JSQLParser implements SQLParser {
