@@ -5,11 +5,12 @@ import com.miljanilic.sql.ast.expression.Expression;
 
 public abstract class Binary extends Expression {
     private final Expression left;
-    private String operator;
+    private final String operator;
     private final Expression right;
 
     public Binary(Expression left, String operator, Expression right) {
         this.left = left;
+        this.operator = operator;
         this.right = right;
     }
 
