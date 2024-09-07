@@ -27,9 +27,6 @@ public class Column extends Expression {
 
     @Override
     public String toString() {
-        return "Column{" +
-                "name='" + name + '\'' +
-                ", from=" + from +
-                '}';
+        return (from != null ? from + "." : "") + name;
     }
 }

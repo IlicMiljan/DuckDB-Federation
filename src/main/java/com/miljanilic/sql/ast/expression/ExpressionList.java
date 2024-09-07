@@ -3,6 +3,7 @@ package com.miljanilic.sql.ast.expression;
 import com.miljanilic.sql.ast.ASTVisitor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ExpressionList extends Expression {
     private final List<Expression> expressions;
@@ -22,8 +23,8 @@ public class ExpressionList extends Expression {
 
     @Override
     public String toString() {
-        return "ExpressionList{" +
-                "expressions=" + expressions +
-                '}';
+        return expressions.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(", "));
     }
 }
