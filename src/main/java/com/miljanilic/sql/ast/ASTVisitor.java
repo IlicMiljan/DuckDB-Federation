@@ -22,7 +22,7 @@ public interface ASTVisitor<T, S> {
 
     // Table-related
     T visit(Table table, S context);
-    T visit(SimpleJoin expression, S context);
+    T visit(Join expression, S context);
 
     // Column and Function
     T visit(Column expression, S context);
@@ -55,7 +55,7 @@ public interface ASTVisitor<T, S> {
     T visit(ExpressionList expression, S context);
 
     // Simple Clause Implementations
-    T visit(SimpleSelect table, S context);
-    T visit(SimpleOrderBy table, S context);
-    T visit(SimpleGroupBy expression, S context);
+    T visit(Select table, S context);
+    T visit(OrderBy table, S context);
+    T visit(GroupBy expression, S context);
 }
