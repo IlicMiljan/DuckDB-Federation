@@ -3,10 +3,16 @@ package com.miljanilic.sql.ast.clause;
 import com.miljanilic.sql.ast.ASTVisitor;
 import com.miljanilic.sql.ast.node.Select;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SelectClause extends Clause {
     private final List<Select> selectList;
+
+    public SelectClause() {
+        this.selectList = new ArrayList<>();
+    }
 
     public SelectClause(List<Select> selectList) {
         this.selectList = selectList;
@@ -23,8 +29,8 @@ public class SelectClause extends Clause {
 
     @Override
     public String toString() {
-        return "SelectClause{" +
-                "selectList=" + selectList +
-                '}';
+        return selectList.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(", "));
     }
 }

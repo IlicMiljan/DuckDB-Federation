@@ -4,6 +4,7 @@ import com.miljanilic.sql.ast.ASTVisitor;
 import com.miljanilic.sql.ast.node.OrderBy;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrderByClause extends Clause {
     private final List<OrderBy> orderByList;
@@ -23,8 +24,8 @@ public class OrderByClause extends Clause {
 
     @Override
     public String toString() {
-        return "OrderByClause{" +
-                "orderByList=" + orderByList +
-                '}';
+        return "ORDER BY " + orderByList.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(", "));
     }
 }

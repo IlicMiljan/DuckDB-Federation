@@ -7,7 +7,7 @@ public class LessThan extends Comparison {
     private static final String OPERATOR = "<";
 
     public LessThan(Expression left, Expression right) {
-        super(left, right, OPERATOR);
+        super(left, OPERATOR, right);
     }
 
     @Override

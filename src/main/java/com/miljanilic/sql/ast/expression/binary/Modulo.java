@@ -7,11 +7,7 @@ public class Modulo extends Binary {
     private static final String OPERATOR = "%";
 
     public Modulo(Expression left, Expression right) {
-        super(left, right);
-    }
-
-    public String getOperator() {
-        return OPERATOR;
+        super(left, OPERATOR, right);
     }
 
     @Override
