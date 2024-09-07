@@ -27,9 +27,13 @@ public class LimitClause extends Clause {
 
     @Override
     public String toString() {
-        return "LimitClause{" +
-                "limit=" + limit +
-                ", offset=" + offset +
-                '}';
+        StringBuilder sb = new StringBuilder("LIMIT ");
+        sb.append(limit);
+
+        if (offset != null) {
+            sb.append(" OFFSET ").append(offset);
+        }
+
+        return sb.toString();
     }
 }

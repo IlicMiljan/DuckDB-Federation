@@ -18,10 +18,7 @@ public class WhereClause extends Clause {
         return visitor.visit(this, context);
     }
 
-    @Override
     public String toString() {
-        return "WhereClause{" +
-                "condition=" + condition +
-                '}';
+        return "WHERE " + condition;
     }
 }
