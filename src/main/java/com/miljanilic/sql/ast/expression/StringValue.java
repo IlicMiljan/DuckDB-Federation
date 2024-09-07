@@ -19,8 +19,6 @@ public class StringValue extends Expression {
 
     @Override
     public String toString() {
-        return "StringValue{" +
-                "value='" + value + '\'' +
-                '}';
+        return "'" + value + "'";
     }
 }

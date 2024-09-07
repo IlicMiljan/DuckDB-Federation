@@ -7,11 +7,7 @@ public class AndOperator extends Binary {
     private static final String OPERATOR = "AND";
 
     public AndOperator(Expression left, Expression right) {
-        super(left, right);
-    }
-
-    public String getOperator() {
-        return OPERATOR;
+        super(left, OPERATOR, right);
     }
 
     @Override
