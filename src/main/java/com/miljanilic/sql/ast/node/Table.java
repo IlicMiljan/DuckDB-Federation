@@ -1,20 +1,16 @@
 package com.miljanilic.sql.ast.node;
 
+import com.miljanilic.catalog.data.Schema;
 import com.miljanilic.sql.ast.ASTVisitor;
 
 public class Table extends From {
-    private final String schema;
     private final String name;
     private final String alias;
 
-    public Table(String schema, String name, String alias) {
-        this.schema = schema;
+    public Table(Schema schema, String name, String alias) {
+        super(schema);
         this.name = name;
         this.alias = alias;
-    }
-
-    public String getSchema() {
-        return schema;
     }
 
     public String getName() {
@@ -31,6 +27,6 @@ public class Table extends From {
     }
 
     public String toString() {
-        return (schema != null ? schema + "." : "") + name + (alias != null ? " " + alias : "");
+        return (schema != null ? schema.getName() + "." : "") + name + (alias != null ? " " + alias : "");
     }
 }
