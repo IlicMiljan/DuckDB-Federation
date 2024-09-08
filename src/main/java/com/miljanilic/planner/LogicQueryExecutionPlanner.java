@@ -2,7 +2,7 @@ package com.miljanilic.planner;
 
 import com.google.inject.Singleton;
 import com.miljanilic.planner.node.*;
-import com.miljanilic.sql.ast.ASTVisitorAdapter;
+import com.miljanilic.sql.ast.visitor.ASTVisitorAdapter;
 import com.miljanilic.sql.ast.clause.*;
 import com.miljanilic.sql.ast.expression.Expression;
 import com.miljanilic.sql.ast.expression.Function;
