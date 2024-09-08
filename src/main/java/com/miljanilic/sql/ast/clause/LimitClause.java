@@ -4,8 +4,8 @@ import com.miljanilic.sql.ast.ASTVisitor;
 import com.miljanilic.sql.ast.expression.Expression;
 
 public class LimitClause extends Clause {
-    private final Expression limit;
-    private final Expression offset;
+    private Expression limit;
+    private Expression offset;
 
     public LimitClause(final Expression limit, final Expression offset) {
         this.limit = limit;
@@ -16,8 +16,16 @@ public class LimitClause extends Clause {
         return limit;
     }
 
+    public void setLimit(Expression limit) {
+        this.limit = limit;
+    }
+
     public Expression getOffset() {
         return offset;
+    }
+
+    public void setOffset(Expression offset) {
+        this.offset = offset;
     }
 
     @Override

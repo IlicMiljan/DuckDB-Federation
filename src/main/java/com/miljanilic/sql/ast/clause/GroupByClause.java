@@ -4,7 +4,7 @@ import com.miljanilic.sql.ast.ASTVisitor;
 import com.miljanilic.sql.ast.node.GroupBy;
 
 public class GroupByClause extends Clause {
-    private final GroupBy groupBy;
+    private GroupBy groupBy;
 
     public GroupByClause(GroupBy groupBy) {
         this.groupBy = groupBy;
@@ -12,6 +12,10 @@ public class GroupByClause extends Clause {
 
     public GroupBy getGroupBy() {
         return groupBy;
+    }
+
+    public void setGroupBy(GroupBy groupBy) {
+        this.groupBy = groupBy;
     }
 
     @Override

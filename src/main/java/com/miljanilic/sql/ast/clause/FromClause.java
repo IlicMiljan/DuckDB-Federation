@@ -4,7 +4,7 @@ import com.miljanilic.sql.ast.ASTVisitor;
 import com.miljanilic.sql.ast.node.From;
 
 public class FromClause extends Clause {
-    private final From from;
+    private From from;
 
     public FromClause(From from) {
         this.from = from;
@@ -12,6 +12,10 @@ public class FromClause extends Clause {
 
     public From getFrom() {
         return from;
+    }
+
+    public void setFrom(From from) {
+        this.from = from;
     }
 
     @Override

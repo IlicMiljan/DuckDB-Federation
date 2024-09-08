@@ -7,14 +7,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OrderByClause extends Clause {
-    private final List<OrderBy> orderByList;
+    private List<OrderBy> orderByList;
 
     public OrderByClause(List<OrderBy> orderBylist) {
         this.orderByList = orderBylist;
     }
 
+    public void addOrderBy(OrderBy orderBy) {
+        orderByList.add(orderBy);
+    }
+
     public List<OrderBy> getOrderByList() {
         return orderByList;
+    }
+
+    public void setOrderByList(List<OrderBy> orderByList) {
+        this.orderByList = orderByList;
     }
 
     @Override
