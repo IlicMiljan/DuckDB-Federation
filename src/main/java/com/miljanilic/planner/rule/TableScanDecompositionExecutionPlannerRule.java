@@ -1,6 +1,8 @@
 package com.miljanilic.planner.rule;
 
-import com.miljanilic.planner.node.*;
+import com.miljanilic.planner.node.PlanNode;
+import com.miljanilic.planner.node.RemoteScanNode;
+import com.miljanilic.planner.node.ScanNode;
 
 public class TableScanDecompositionExecutionPlannerRule extends ExecutionPlannerRuleAdapter {
     @Override

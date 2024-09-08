@@ -6,10 +6,12 @@ import com.miljanilic.sql.ast.clause.*;
 import com.miljanilic.sql.ast.expression.Expression;
 import com.miljanilic.sql.ast.expression.Function;
 import com.miljanilic.sql.ast.expression.binary.AndOperator;
-import com.miljanilic.sql.ast.node.*;
+import com.miljanilic.sql.ast.node.GroupBy;
+import com.miljanilic.sql.ast.node.Join;
+import com.miljanilic.sql.ast.node.Select;
 import com.miljanilic.sql.ast.statement.SelectStatement;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class ExecutionPlanVisitorStatementConverter implements ExecutionPlanStatementConverter, ExecutionPlanVisitor<SelectStatement, SelectStatement> {
 

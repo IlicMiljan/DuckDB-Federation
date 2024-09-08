@@ -1,6 +1,10 @@
 package com.miljanilic.planner.rule;
 
-import com.miljanilic.planner.node.*;
+import com.miljanilic.planner.node.JoinNode;
+import com.miljanilic.planner.node.PlanNode;
+import com.miljanilic.planner.node.RemoteJoinNode;
+import com.miljanilic.planner.node.RemoteScanNode;
+
 import java.util.List;
 
 public class JoinDecompositionExecutionPlannerRule extends ExecutionPlannerRuleAdapter {
