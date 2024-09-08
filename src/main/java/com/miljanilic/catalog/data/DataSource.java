@@ -49,10 +49,9 @@ public class DataSource {
 
     @Override
     public String toString() {
-        return "DataSource{" +
-                "jdbcUrl='" + jdbcUrl + '\'' +
-                ", jdbcUser='" + jdbcUser + '\'' +
-                ", jdbcDriver='" + jdbcDriver + '\'' +
-                '}';
+        return new StringBuilder()
+                .append("JDBC URL: ").append(jdbcUrl).append("\n")
+                .append("Driver: ").append(jdbcDriver)
+                .toString();
     }
 }
