@@ -27,14 +27,6 @@ public class Column {
         this.type = type;
     }
 
-    @Override
-    public String toString() {
-        return "Column{" +
-                "name='" + name + '\'' +
-                ", type=" + type +
-                '}';
-    }
-
     public enum ColumnType {
         INTEGER,
         VARCHAR,
@@ -42,5 +34,11 @@ public class Column {
         DATE,
         DECIMAL
     }
-}
 
+    @Override
+    public String toString() {
+        return new StringBuilder()
+                .append(name).append(" (").append(type).append(")")
+                .toString();
+    }
+}
