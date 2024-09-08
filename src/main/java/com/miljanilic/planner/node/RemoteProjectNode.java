@@ -1,11 +1,9 @@
 package com.miljanilic.planner.node;
 
 import com.miljanilic.catalog.data.Schema;
-import com.miljanilic.sql.ast.expression.Expression;
 import com.miljanilic.sql.ast.node.Select;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RemoteProjectNode extends ProjectNode {
     private final Schema schema;

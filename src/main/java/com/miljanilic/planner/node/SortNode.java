@@ -25,7 +25,7 @@ public class SortNode extends PlanNode {
     @Override
     public String toString() {
         return "Sort: " + orderByList.stream()
-                .map(orderBy -> ((OrderBy)orderBy).getExpression() + (((OrderBy)orderBy).isAscending() ? " ASC" : " DESC"))
+                .map(orderBy -> orderBy.getExpression() + (orderBy.isAscending() ? " ASC" : " DESC"))
                 .collect(Collectors.joining(", "));
     }
 }

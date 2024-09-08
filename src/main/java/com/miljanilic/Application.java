@@ -2,7 +2,8 @@ package com.miljanilic;
 
 import com.google.inject.Inject;
 import com.miljanilic.catalog.data.Schema;
-import com.miljanilic.planner.*;
+import com.miljanilic.planner.ExecutionPlanVisitor;
+import com.miljanilic.planner.ExecutionPlanner;
 import com.miljanilic.planner.converter.ExecutionPlanStatementConverter;
 import com.miljanilic.planner.filter.ExecutionPlanAggregationNodeFilter;
 import com.miljanilic.planner.filter.ExecutionPlanFilter;

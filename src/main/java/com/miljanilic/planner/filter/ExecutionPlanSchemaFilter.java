@@ -30,7 +30,7 @@ public class ExecutionPlanSchemaFilter extends ExecutionPlanFilterAdapter implem
             PlanNode child = visitChildren(node.getChildren(), context);
 
             if (child != null) {
-                RemoteFilterNode newNode = new RemoteFilterNode(((RemoteFilterNode) node).getCondition(), targetSchema);
+                RemoteFilterNode newNode = new RemoteFilterNode(node.getCondition(), targetSchema);
                 newNode.addChild(child);
                 return newNode;
             }
