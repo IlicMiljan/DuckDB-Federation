@@ -2,15 +2,19 @@ package com.miljanilic.planner.rule;
 
 import com.google.inject.Inject;
 import com.miljanilic.catalog.data.Schema;
-import com.miljanilic.sql.ast.visitor.ASTColumnExtractingVisitor;
 import com.miljanilic.planner.ExecutionPlannerException;
 import com.miljanilic.planner.node.*;
 import com.miljanilic.sql.ast.expression.Column;
 import com.miljanilic.sql.ast.expression.Expression;
 import com.miljanilic.sql.ast.expression.Function;
-import com.miljanilic.sql.ast.node.*;
+import com.miljanilic.sql.ast.node.OrderBy;
+import com.miljanilic.sql.ast.node.Select;
+import com.miljanilic.sql.ast.visitor.ASTColumnExtractingVisitor;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ProjectDecompositionExecutionPlannerRule extends ExecutionPlannerRuleAdapter {
     private final ASTColumnExtractingVisitor columnListASTVisitor;

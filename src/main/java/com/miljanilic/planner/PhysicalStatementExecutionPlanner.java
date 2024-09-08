@@ -1,7 +1,7 @@
 package com.miljanilic.planner;
 
 import com.google.inject.Inject;
-import com.miljanilic.planner.node.*;
+import com.miljanilic.planner.node.PlanNode;
 import com.miljanilic.sql.ast.statement.Statement;
 
 import java.util.List;

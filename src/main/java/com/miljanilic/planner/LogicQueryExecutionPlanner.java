@@ -2,7 +2,6 @@ package com.miljanilic.planner;
 
 import com.google.inject.Singleton;
 import com.miljanilic.planner.node.*;
-import com.miljanilic.sql.ast.visitor.ASTVisitorAdapter;
 import com.miljanilic.sql.ast.clause.*;
 import com.miljanilic.sql.ast.expression.Expression;
 import com.miljanilic.sql.ast.expression.Function;
@@ -11,6 +10,7 @@ import com.miljanilic.sql.ast.node.Select;
 import com.miljanilic.sql.ast.node.Table;
 import com.miljanilic.sql.ast.statement.SelectStatement;
 import com.miljanilic.sql.ast.statement.Statement;
+import com.miljanilic.sql.ast.visitor.ASTVisitorAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
