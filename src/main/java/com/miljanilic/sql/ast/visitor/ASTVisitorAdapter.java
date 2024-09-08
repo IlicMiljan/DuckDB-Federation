@@ -1,5 +1,7 @@
-package com.miljanilic.sql.ast;
+package com.miljanilic.sql.ast.visitor;
 
+import com.miljanilic.sql.ast.ASTNode;
+import com.miljanilic.sql.ast.ASTVisitor;
 import com.miljanilic.sql.ast.clause.*;
 import com.miljanilic.sql.ast.expression.*;
 import com.miljanilic.sql.ast.expression.binary.*;
@@ -7,7 +9,7 @@ import com.miljanilic.sql.ast.node.*;
 import com.miljanilic.sql.ast.statement.SelectStatement;
 
 public class ASTVisitorAdapter<T, S> implements ASTVisitor<T, S> {
-    
+
     public T visit(ASTNode node, S context) {
         throw new UnsupportedOperationException("Unsupported node type: " + node.getClass().getSimpleName());
     }
