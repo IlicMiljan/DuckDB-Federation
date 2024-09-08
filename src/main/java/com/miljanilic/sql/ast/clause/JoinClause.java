@@ -7,14 +7,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class JoinClause extends Clause {
-    private final List<Join> joinList;
+    private List<Join> joinList;
 
     public JoinClause(List<Join> joins) {
         this.joinList = joins;
     }
 
+    public void addJoin(Join join) {
+        joinList.add(join);
+    }
+
     public List<Join> getJoinList() {
         return joinList;
+    }
+
+    public void setJoinList(List<Join> joinList) {
+        this.joinList = joinList;
     }
 
     @Override
