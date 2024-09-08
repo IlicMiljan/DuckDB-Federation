@@ -21,6 +21,10 @@ public abstract class PlanNode {
         children.add(child);
     }
 
+    public void addChildren(List<PlanNode> childrenList) {
+        children.addAll(childrenList);
+    }
+
     public List<PlanNode> getChildren() {
         return children;
     }
