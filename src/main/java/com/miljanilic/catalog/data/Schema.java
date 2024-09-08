@@ -2,6 +2,7 @@ package com.miljanilic.catalog.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Schema {
     private String name;
@@ -44,10 +45,10 @@ public class Schema {
 
     @Override
     public String toString() {
-        return "Schema{" +
-                "name='" + name + '\'' +
-                ", dataSource=" + dataSource +
-                ", schemaTableList=" + tables +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Schema: ").append(name).append("\n")
+                .append("Data Source: ").append(dataSource);
+
+        return sb.toString();
     }
 }

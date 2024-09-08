@@ -1,6 +1,7 @@
 package com.miljanilic.catalog.data;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Table {
     private String name;
@@ -56,10 +57,19 @@ public class Table {
 
     @Override
     public String toString() {
-        return "SchemaTable{" +
-                "name='" + name + '\'' +
-                ", type=" + type +
-                ", sql='" + sql + '\'' +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Table: ").append(name).append(" (").append(type).append(")\n")
+                .append("SQL: ").append(sql).append("\n")
+                .append("Columns: ");
+
+        if (columns != null && !columns.isEmpty()) {
+            sb.append(columns.stream()
+                    .map(Column::toString)
+                    .collect(Collectors.joining(", ")));
+        } else {
+            sb.append("No columns");
+        }
+
+        return sb.toString();
     }
 }
