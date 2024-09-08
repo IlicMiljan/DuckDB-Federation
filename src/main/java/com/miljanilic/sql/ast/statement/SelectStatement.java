@@ -4,14 +4,16 @@ import com.miljanilic.sql.ast.ASTVisitor;
 import com.miljanilic.sql.ast.clause.*;
 
 public class SelectStatement extends Statement {
-    private final SelectClause selectClause;
-    private final FromClause fromClause;
-    private final JoinClause joinClause;
-    private final WhereClause whereClause;
-    private final GroupByClause groupByClause;
-    private final HavingClause havingClause;
-    private final OrderByClause orderByClause;
-    private final LimitClause limitClause;
+    private SelectClause selectClause;
+    private FromClause fromClause;
+    private JoinClause joinClause;
+    private WhereClause whereClause;
+    private GroupByClause groupByClause;
+    private HavingClause havingClause;
+    private OrderByClause orderByClause;
+    private LimitClause limitClause;
+
+    public SelectStatement() {}
 
     public SelectStatement(
             SelectClause selectClause,
@@ -37,32 +39,64 @@ public class SelectStatement extends Statement {
         return selectClause;
     }
 
+    public void setSelectClause(SelectClause selectClause) {
+        this.selectClause = selectClause;
+    }
+
     public FromClause getFromClause() {
         return fromClause;
+    }
+
+    public void setFromClause(FromClause fromClause) {
+        this.fromClause = fromClause;
     }
 
     public JoinClause getJoinClause() {
         return joinClause;
     }
 
+    public void setJoinClause(JoinClause joinClause) {
+        this.joinClause = joinClause;
+    }
+
     public WhereClause getWhereClause() {
         return whereClause;
+    }
+
+    public void setWhereClause(WhereClause whereClause) {
+        this.whereClause = whereClause;
     }
 
     public GroupByClause getGroupByClause() {
         return groupByClause;
     }
 
+    public void setGroupByClause(GroupByClause groupByClause) {
+        this.groupByClause = groupByClause;
+    }
+
     public HavingClause getHavingClause() {
         return havingClause;
+    }
+
+    public void setHavingClause(HavingClause havingClause) {
+        this.havingClause = havingClause;
     }
 
     public OrderByClause getOrderByClause() {
         return orderByClause;
     }
 
+    public void setOrderByClause(OrderByClause orderByClause) {
+        this.orderByClause = orderByClause;
+    }
+
     public LimitClause getLimitClause() {
         return limitClause;
+    }
+
+    public void setLimitClause(LimitClause limitClause) {
+        this.limitClause = limitClause;
     }
 
     @Override
@@ -74,14 +108,14 @@ public class SelectStatement extends Statement {
     public String toString() {
         StringBuilder sb = new StringBuilder("SELECT ");
 
-        sb.append(selectClause).append("\n");
-        sb.append("FROM ").append(fromClause).append("\n");
-        if (joinClause != null) sb.append(joinClause).append("\n");
-        if (whereClause != null) sb.append(whereClause).append("\n");
-        if (groupByClause != null) sb.append(groupByClause).append("\n");
-        if (havingClause != null) sb.append(havingClause).append("\n");
-        if (orderByClause != null) sb.append(orderByClause).append("\n");
-        if (limitClause != null) sb.append(limitClause);
+        sb.append(selectClause);
+        sb.append("\n").append("FROM ").append(fromClause);
+        if (joinClause != null) sb.append("\n").append(joinClause);
+        if (whereClause != null) sb.append("\n").append(whereClause);
+        if (groupByClause != null) sb.append("\n").append(groupByClause);
+        if (havingClause != null) sb.append("\n").append(havingClause);
+        if (orderByClause != null) sb.append("\n").append(orderByClause);
+        if (limitClause != null) sb.append("\n").append(limitClause);
 
         return sb.toString();
     }

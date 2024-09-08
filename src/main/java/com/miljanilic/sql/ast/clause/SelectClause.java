@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SelectClause extends Clause {
-    private final List<Select> selectList;
+    private List<Select> selectList;
 
     public SelectClause() {
         this.selectList = new ArrayList<>();
@@ -18,8 +18,16 @@ public class SelectClause extends Clause {
         this.selectList = selectList;
     }
 
+    public void addSelect(Select select) {
+        selectList.add(select);
+    }
+
     public List<Select> getSelectList() {
         return selectList;
+    }
+
+    public void setSelectList(List<Select> selectList) {
+        this.selectList = selectList;
     }
 
     @Override

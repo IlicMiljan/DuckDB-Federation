@@ -4,7 +4,7 @@ import com.miljanilic.sql.ast.ASTVisitor;
 import com.miljanilic.sql.ast.expression.Expression;
 
 public class HavingClause extends Clause {
-    private final Expression condition;
+    private Expression condition;
 
     public HavingClause(Expression condition) {
         this.condition = condition;
@@ -12,6 +12,10 @@ public class HavingClause extends Clause {
 
     public Expression getCondition() {
         return condition;
+    }
+
+    public void setCondition(Expression condition) {
+        this.condition = condition;
     }
 
     public <T, S> T accept(ASTVisitor<T, S> visitor, S context) {
