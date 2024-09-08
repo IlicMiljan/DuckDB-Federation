@@ -1,7 +1,7 @@
 package com.miljanilic.planner.filter;
 
-import com.miljanilic.planner.node.*;
 import com.miljanilic.catalog.data.Schema;
+import com.miljanilic.planner.node.*;
 
 public class ExecutionPlanSchemaFilter extends ExecutionPlanFilterAdapter implements ExecutionPlanFilter {
 
