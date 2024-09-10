@@ -12,7 +12,8 @@ import com.miljanilic.planner.node.PlanNode;
 import com.miljanilic.planner.visitor.SchemaExtractingExecutionPlanVisitor;
 import com.miljanilic.sql.ast.statement.SelectStatement;
 import com.miljanilic.sql.ast.statement.Statement;
-import com.miljanilic.sql.parser.SQLParser;
+import com.miljanilic.sql.deparser.SqlDeParser;
+import com.miljanilic.sql.parser.SqlParser;
 import com.miljanilic.sql.parser.SQLParserException;
 
 import java.util.HashSet;
@@ -20,19 +21,22 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Application {
-    private final SQLParser sqlParser;
+    private final SqlParser sqlParser;
     private final ExecutionPlanner executionPlanner;
     private final ExecutionPlanStatementConverter executionPlanStatementConverter;
+    private final SqlDeParser sqlDeParser;
 
     @Inject
     public Application(
-            SQLParser sqlParser,
+            SqlParser sqlParser,
             ExecutionPlanner executionPlanner,
-            ExecutionPlanStatementConverter executionPlanStatementConverter
+            ExecutionPlanStatementConverter executionPlanStatementConverter,
+            SqlDeParser sqlDeParser
     ) {
         this.sqlParser = sqlParser;
         this.executionPlanner = executionPlanner;
         this.executionPlanStatementConverter = executionPlanStatementConverter;
+        this.sqlDeParser = sqlDeParser;
     }
 
     public void run() {
@@ -42,7 +46,8 @@ public class Application {
 
         try {
             Statement statement = sqlParser.parse(sql);
-            System.out.println(statement);
+            System.out.println("Parsed SQL: " + this.sqlDeParser.deparse(statement));
+
 
             System.out.println("----------------");
 
@@ -52,7 +57,7 @@ public class Application {
             System.out.println("----------------");
 
             SelectStatement executionStatement = executionPlanStatementConverter.convert(planRoot);
-            System.out.println(executionStatement);
+            System.out.println("Execution SQL: " + this.sqlDeParser.deparse(executionStatement));
 
             System.out.println("----------------");
 
@@ -72,7 +77,7 @@ public class Application {
                 PlanNode schemaFilteredPlanRoot = filter.filter(planRoot);
 
                 SelectStatement schemaFilteredExecutionStatement = executionPlanStatementConverter.convert(schemaFilteredPlanRoot);
-                System.out.println(schemaFilteredExecutionStatement);
+                System.out.println("Schema Filtered SQL (" + schema.getName() + "): " + this.sqlDeParser.deparse(schemaFilteredExecutionStatement));
 
                 System.out.println("----------------");
             }
@@ -82,7 +87,8 @@ public class Application {
             PlanNode schemaFilteredPlanRoot = filter.filter(planRoot);
 
             SelectStatement schemaFilteredExecutionStatement = executionPlanStatementConverter.convert(schemaFilteredPlanRoot);
-            System.out.println(schemaFilteredExecutionStatement);
+
+            System.out.println("Aggregation SQL: " + this.sqlDeParser.deparse(schemaFilteredExecutionStatement));
 
             System.out.println("----------------");
         } catch (SQLParserException e) {

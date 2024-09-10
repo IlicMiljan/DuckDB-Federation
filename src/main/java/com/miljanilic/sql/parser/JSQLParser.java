@@ -8,7 +8,7 @@ import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.select.SelectVisitor;
 
 @Singleton
-public class JSQLParser implements SQLParser {
+public class JSQLParser implements SqlParser {
     private final SelectVisitor<Statement> selectVisitor;
 
     @Inject
