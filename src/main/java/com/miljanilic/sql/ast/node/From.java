@@ -1,19 +1,26 @@
 package com.miljanilic.sql.ast.node;
 
 import com.miljanilic.catalog.data.Schema;
+import com.miljanilic.catalog.data.Table;
 import com.miljanilic.sql.ast.ASTVisitor;
 
 import java.util.Objects;
 
 public abstract class From extends Node {
     protected final Schema schema;
+    protected final Table schemaTable;
 
-    protected From(Schema schema) {
+    protected From(Schema schema, Table schemaTable) {
         this.schema = schema;
+        this.schemaTable = schemaTable;
     }
 
     public Schema getSchema() {
         return schema;
+    }
+
+    public Table getSchemaTable() {
+        return schemaTable;
     }
 
     @Override

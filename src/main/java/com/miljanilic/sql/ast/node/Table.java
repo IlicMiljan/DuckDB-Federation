@@ -9,8 +9,8 @@ public class Table extends From {
     private final String name;
     private final String alias;
 
-    public Table(Schema schema, String name, String alias) {
-        super(schema);
+    public Table(Schema schema, com.miljanilic.catalog.data.Table table, String name, String alias) {
+        super(schema, table);
         this.name = name;
         this.alias = alias;
     }
