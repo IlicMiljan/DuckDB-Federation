@@ -67,11 +67,20 @@ public class ExecutionPlanVisitorStatementConverter implements ExecutionPlanStat
     public SelectStatement visit(ProjectNode node, SelectStatement statement) {
         SelectStatement result = visitChildren(node, statement);
         SelectClause selectClause = result.getSelectClause();
+
         if (selectClause == null) {
             selectClause = new SelectClause(new ArrayList<>());
             result.setSelectClause(selectClause);
         }
-        selectClause.getSelectList().addAll(node.getSelectList());
+
+        for (Select select : node.getSelectList()) {
+            if (selectClause.getSelectList().contains(select)) {
+                continue;
+            }
+
+            selectClause.addSelect(select);
+        }
+
         return result;
     }
 
