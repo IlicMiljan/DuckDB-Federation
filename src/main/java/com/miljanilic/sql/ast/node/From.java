@@ -16,10 +16,6 @@ public abstract class From extends Node {
         return schema;
     }
 
-    public Table getSchemaTable() {
-        return schemaTable;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
