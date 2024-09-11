@@ -2,6 +2,7 @@ package com.miljanilic.catalog.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Schema {
     private String name;
@@ -40,6 +41,18 @@ public class Schema {
 
     public void setTables(List<Table> tables) {
         this.tables = tables;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Schema schema)) return false;
+        return Objects.equals(name, schema.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
     }
 
     @Override
