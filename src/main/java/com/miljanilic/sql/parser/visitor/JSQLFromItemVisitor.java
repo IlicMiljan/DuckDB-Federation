@@ -20,6 +20,7 @@ public class JSQLFromItemVisitor extends FromItemVisitorAdapter<From> {
     public <S> From visit(net.sf.jsqlparser.schema.Table table, S context) {
         return new Table(
                 this.schemaRepository.getSchema(table.getSchemaName()),
+                this.schemaRepository.getSchemaTable(table.getSchemaName(), table.getName()),
                 table.getName(),
                 table.getAlias() != null ? table.getAlias().getName() : null
         );
