@@ -31,21 +31,20 @@ public class InMemorySchemaRepository implements SchemaRepository {
     }
 
     @Override
-    public List<Table> getTables(String schemaName) {
+    public List<Table> getSchemaTables(String schemaName) {
         Schema schema = getSchema(schemaName);
         return schema != null ? schema.getTables() : null;
     }
 
     @Override
-    public Table getTable(String schemaName, String tableName) {
+    public Table getSchemaTable(String schemaName, String tableName) {
         Schema schema = getSchema(schemaName);
         if (schema != null) {
             return schema.getTables().stream()
-                    .filter(table -> table.getName().equalsIgnoreCase(tableName))
+                    .filter(schemaTable -> schemaTable.getName().equalsIgnoreCase(tableName))
                     .findFirst()
                     .orElse(null);
         }
         return null;
     }
 }
-
