@@ -6,7 +6,10 @@ import com.miljanilic.sql.ast.node.OrderBy;
 import com.miljanilic.sql.ast.node.Select;
 import com.miljanilic.sql.ast.statement.SelectStatement;
 import com.miljanilic.sql.ast.visitor.ASTVisitorAdapter;
-import net.sf.jsqlparser.statement.select.*;
+import net.sf.jsqlparser.statement.select.Join;
+import net.sf.jsqlparser.statement.select.Limit;
+import net.sf.jsqlparser.statement.select.OrderByElement;
+import net.sf.jsqlparser.statement.select.PlainSelect;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,8 +2,10 @@ package com.miljanilic.sql.deparser.visitor;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.miljanilic.sql.ast.expression.*;
+import com.miljanilic.sql.ast.expression.ExpressionList;
 import com.miljanilic.sql.ast.expression.Function;
+import com.miljanilic.sql.ast.expression.LongValue;
+import com.miljanilic.sql.ast.expression.StringValue;
 import com.miljanilic.sql.ast.expression.binary.*;
 import com.miljanilic.sql.ast.visitor.ASTVisitorAdapter;
 import net.sf.jsqlparser.expression.Expression;
