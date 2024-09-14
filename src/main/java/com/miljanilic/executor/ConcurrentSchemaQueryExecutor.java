@@ -6,7 +6,7 @@ import com.miljanilic.catalog.data.Schema;
 import com.miljanilic.sql.ast.statement.SelectStatement;
 
 import java.sql.ResultSet;
-import java.util.*;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

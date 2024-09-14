@@ -10,10 +10,8 @@ import com.miljanilic.executor.table.TemporaryTable;
 import com.miljanilic.sql.ast.expression.Column;
 import com.miljanilic.sql.ast.statement.SelectStatement;
 import com.miljanilic.sql.ast.visitor.ASTColumnExtractingVisitor;
-import com.miljanilic.sql.deparser.SqlDeParser;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.util.HashSet;
 import java.util.Set;

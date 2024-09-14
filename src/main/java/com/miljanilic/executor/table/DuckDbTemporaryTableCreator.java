@@ -1,17 +1,10 @@
 package com.miljanilic.executor.table;
 
 import com.miljanilic.executor.SQLExecutionException;
-import com.miljanilic.sql.ast.expression.Column;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 public class DuckDbTemporaryTableCreator {
 
