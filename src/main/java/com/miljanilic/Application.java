@@ -108,7 +108,7 @@ public class Application {
 
             System.out.println("----------------");
 
-            try (Connection connection = DriverManager.getConnection("jdbc:duckdb:database.db")) {
+            try (Connection connection = DriverManager.getConnection("jdbc:duckdb:tmp/database.db")) {
                 concurrentSchemaQueryExecutor.executeAll(schemaSelectStatementMap, (selectStatement, resultSet) -> {
                     duckDbTemporaryStorageResultSetConsumer.consume(connection, selectStatement, resultSet);
                 });
