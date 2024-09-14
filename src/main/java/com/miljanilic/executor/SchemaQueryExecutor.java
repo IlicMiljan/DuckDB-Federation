@@ -5,7 +5,10 @@ import com.miljanilic.catalog.data.Schema;
 import com.miljanilic.sql.ast.statement.SelectStatement;
 import com.miljanilic.sql.deparser.SqlDeParser;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.function.BiConsumer;
 
 public class SchemaQueryExecutor {
