@@ -4,6 +4,8 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.miljanilic.catalog.data.Schema;
 import com.miljanilic.sql.ast.statement.SelectStatement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.ResultSet;
 import java.util.Map;
@@ -15,6 +17,7 @@ import java.util.function.BiConsumer;
 @Singleton
 public class ConcurrentSchemaQueryExecutor {
     private final SchemaQueryExecutor schemaQueryExecutor;
+    private static final Logger logger = LoggerFactory.getLogger(ConcurrentSchemaQueryExecutor.class);
 
     @Inject
     public ConcurrentSchemaQueryExecutor(
@@ -32,7 +35,7 @@ public class ConcurrentSchemaQueryExecutor {
                     try {
                         schemaQueryExecutor.execute(entry.getKey(), entry.getValue(), resultSetConsumer);
                     } catch (Exception e) {
-                        throw new SQLExecutionException("Distributed query execution failed", e);
+                        logger.error("Distributed query execution failed", e);
                     } finally {
                         latch.countDown();
                     }
