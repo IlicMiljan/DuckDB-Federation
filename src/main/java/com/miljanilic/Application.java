@@ -21,6 +21,8 @@ import com.miljanilic.sql.parser.SqlParser;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 
 public class Application {
@@ -55,6 +57,8 @@ public class Application {
         Scanner scanner = new Scanner(System.in);
 
         String sql = scanner.nextLine();
+
+        Instant start = Instant.now();
 
         try {
             Statement statement = sqlParser.parse(sql);
@@ -124,5 +128,8 @@ public class Application {
         } catch (Exception e) {
             System.out.println("Error executing SQL: " + e.getMessage());
         }
+
+        Instant finish = Instant.now();
+        System.out.println("Time Elapsed: " + Duration.between(start, finish).toMillis() + "ms");
     }
 }
