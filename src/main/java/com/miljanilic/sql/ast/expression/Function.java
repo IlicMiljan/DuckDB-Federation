@@ -7,10 +7,18 @@ import java.util.Objects;
 public class Function extends Expression {
     private final String functionName;
     private final Expression arguments;
+    private final boolean distinct;
 
     public Function(String functionName, Expression arguments) {
         this.functionName = functionName;
         this.arguments = arguments;
+        this.distinct = false;
+    }
+
+    public Function(String functionName, Expression arguments, boolean distinct) {
+        this.functionName = functionName;
+        this.arguments = arguments;
+        this.distinct = distinct;
     }
 
     public String getFunctionName() {
@@ -19,6 +27,10 @@ public class Function extends Expression {
 
     public Expression getArguments() {
         return arguments;
+    }
+
+    public boolean isDistinct() {
+        return distinct;
     }
 
     @Override
@@ -40,6 +52,6 @@ public class Function extends Expression {
 
     @Override
     public String toString() {
-        return functionName + "(" + arguments + ")";
+        return functionName + "(" + (distinct ? "DISTINCT" : "") + arguments + ")";
     }
 }

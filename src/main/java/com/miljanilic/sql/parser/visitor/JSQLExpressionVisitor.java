@@ -161,7 +161,8 @@ public class JSQLExpressionVisitor extends ExpressionVisitorAdapter<Expression> 
     public <S> Expression visit(net.sf.jsqlparser.expression.Function function, S context) {
         return new Function(
                 function.getName(),
-                function.getParameters() != null ? function.getParameters().accept(this, context) : null
+                function.getParameters() != null ? function.getParameters().accept(this, context) : null,
+                function.isDistinct()
         );
     }
 
