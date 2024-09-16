@@ -244,7 +244,7 @@ def populate_data(num_users, num_products, num_orders, num_order_items, num_acti
 
 try:
     create_databases_and_tables()
-    populate_data(1000000, 10000, 2500000, 5000000, 15000000)
+    populate_data(1000000, 10000, 5000000, 10000000, 50000000)
 except Exception as e:
     logging.error(f"An error occurred: {e}")
 
