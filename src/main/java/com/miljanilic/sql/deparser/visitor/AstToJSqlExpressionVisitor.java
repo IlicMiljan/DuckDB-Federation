@@ -19,7 +19,6 @@ import net.sf.jsqlparser.statement.select.FromItem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Singleton
 public class AstToJSqlExpressionVisitor extends ASTVisitorAdapter<Expression, Void> {
@@ -35,10 +34,8 @@ public class AstToJSqlExpressionVisitor extends ASTVisitorAdapter<Expression, Vo
         FromItem jsqlFromItem = column.getFrom().accept(fromItemVisitor, null);
         Table jsqlTable = null;
 
-        if (Objects.equals(column.getFrom().getSchema().getDataSource().getJdbcDriver(), "com.mysql.cj.jdbc.Driver")) {
-            if (jsqlFromItem instanceof Table) {
-                jsqlTable = (Table) jsqlFromItem;
-            }
+        if (jsqlFromItem instanceof Table) {
+            jsqlTable = (Table) jsqlFromItem;
         }
 
         return new Column(
