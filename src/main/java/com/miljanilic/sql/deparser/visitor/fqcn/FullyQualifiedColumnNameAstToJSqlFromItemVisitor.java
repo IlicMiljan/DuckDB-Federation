@@ -1,12 +1,12 @@
-package com.miljanilic.sql.deparser.visitor;
+package com.miljanilic.sql.deparser.visitor.fqcn;
 
 import com.google.inject.Singleton;
 import com.miljanilic.sql.ast.node.Table;
-import com.miljanilic.sql.ast.visitor.ASTVisitorAdapter;
+import com.miljanilic.sql.deparser.visitor.base.BaseAstToJSqlFromItemVisitor;
 import net.sf.jsqlparser.statement.select.FromItem;
 
 @Singleton
-public class AstToJSqlFromItemVisitor extends ASTVisitorAdapter<FromItem, Void> {
+public class FullyQualifiedColumnNameAstToJSqlFromItemVisitor extends BaseAstToJSqlFromItemVisitor {
     @Override
     public FromItem visit(Table table, Void context) {
         net.sf.jsqlparser.schema.Table jsqlTable = new net.sf.jsqlparser.schema.Table();
