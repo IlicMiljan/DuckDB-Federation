@@ -1,19 +1,15 @@
 package com.miljanilic.sql.deparser;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.miljanilic.sql.ast.statement.SelectStatement;
 import com.miljanilic.sql.ast.statement.Statement;
-import com.miljanilic.sql.deparser.visitor.AstToJSqlSelectStatementVisitor;
+import com.miljanilic.sql.deparser.visitor.base.BaseAstToJSqlSelectStatementVisitor;
 import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.util.deparser.StatementDeParser;
 
-@Singleton
-public class JSqlDeParser implements SqlDeParser {
-    private final AstToJSqlSelectStatementVisitor selectStatementVisitor;
+public abstract class BaseJSqlDeParser implements SqlDeParser {
+    private final BaseAstToJSqlSelectStatementVisitor selectStatementVisitor;
 
-    @Inject
-    public JSqlDeParser(AstToJSqlSelectStatementVisitor selectVisitor) {
+    public BaseJSqlDeParser(BaseAstToJSqlSelectStatementVisitor selectVisitor) {
         this.selectStatementVisitor = selectVisitor;
     }
 

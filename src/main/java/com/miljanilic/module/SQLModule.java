@@ -8,8 +8,6 @@ import com.miljanilic.sql.ast.node.GroupBy;
 import com.miljanilic.sql.ast.node.OrderBy;
 import com.miljanilic.sql.ast.node.Select;
 import com.miljanilic.sql.ast.statement.Statement;
-import com.miljanilic.sql.deparser.JSqlDeParser;
-import com.miljanilic.sql.deparser.SqlDeParser;
 import com.miljanilic.sql.parser.JSQLParser;
 import com.miljanilic.sql.parser.SqlParser;
 import com.miljanilic.sql.parser.visitor.*;
@@ -20,7 +18,6 @@ public class SQLModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(SqlParser.class).to(JSQLParser.class);
-        bind(SqlDeParser.class).to(JSqlDeParser.class);
 
         bind(new TypeLiteral<SelectVisitor<Statement>>() {}).to(JSQLSelectVisitor.class);
         bind(new TypeLiteral<SelectItemVisitor<Select>>() {}).to(JSQLSelectItemVisitor.class);

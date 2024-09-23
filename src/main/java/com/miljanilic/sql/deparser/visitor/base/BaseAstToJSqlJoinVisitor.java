@@ -1,17 +1,13 @@
-package com.miljanilic.sql.deparser.visitor;
+package com.miljanilic.sql.deparser.visitor.base;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.miljanilic.sql.ast.visitor.ASTVisitorAdapter;
 import net.sf.jsqlparser.statement.select.Join;
 
-@Singleton
-public class AstToJSqlJoinVisitor extends ASTVisitorAdapter<Join, Void> {
-    private final AstToJSqlExpressionVisitor expressionVisitor;
-    private final AstToJSqlFromItemVisitor fromItemVisitor;
+public abstract class BaseAstToJSqlJoinVisitor extends ASTVisitorAdapter<Join, Void> {
+    private final BaseAstToJSqlExpressionVisitor expressionVisitor;
+    private final BaseAstToJSqlFromItemVisitor fromItemVisitor;
 
-    @Inject
-    public AstToJSqlJoinVisitor(AstToJSqlExpressionVisitor expressionVisitor, AstToJSqlFromItemVisitor fromItemVisitor) {
+    public BaseAstToJSqlJoinVisitor(BaseAstToJSqlExpressionVisitor expressionVisitor, BaseAstToJSqlFromItemVisitor fromItemVisitor) {
         this.expressionVisitor = expressionVisitor;
         this.fromItemVisitor = fromItemVisitor;
     }

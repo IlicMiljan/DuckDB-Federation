@@ -1,7 +1,5 @@
-package com.miljanilic.sql.deparser.visitor;
+package com.miljanilic.sql.deparser.visitor.base;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.miljanilic.sql.ast.node.OrderBy;
 import com.miljanilic.sql.ast.node.Select;
 import com.miljanilic.sql.ast.statement.SelectStatement;
@@ -14,23 +12,21 @@ import net.sf.jsqlparser.statement.select.PlainSelect;
 import java.util.ArrayList;
 import java.util.List;
 
-@Singleton
-public class AstToJSqlSelectStatementVisitor extends ASTVisitorAdapter<PlainSelect, Void> {
-    private final AstToJSqlSelectVisitor selectVisitor;
-    private final AstToJSqlFromItemVisitor fromItemVisitor;
-    private final AstToJSqlJoinVisitor joinVisitor;
-    private final AstToJSqlExpressionVisitor expressionVisitor;
-    private final AstToJSqlOrderByVisitor orderByVisitor;
-    private final AstToJSqlGroupByVisitor groupByVisitor;
+public abstract class BaseAstToJSqlSelectStatementVisitor extends ASTVisitorAdapter<PlainSelect, Void> {
+    private final BaseAstToJSqlSelectVisitor selectVisitor;
+    private final BaseAstToJSqlFromItemVisitor fromItemVisitor;
+    private final BaseAstToJSqlJoinVisitor joinVisitor;
+    private final BaseAstToJSqlExpressionVisitor expressionVisitor;
+    private final BaseAstToJSqlOrderByVisitor orderByVisitor;
+    private final BaseAstToJSqlGroupByVisitor groupByVisitor;
 
-    @Inject
-    public AstToJSqlSelectStatementVisitor(
-            AstToJSqlSelectVisitor selectVisitor,
-            AstToJSqlFromItemVisitor fromItemVisitor,
-            AstToJSqlJoinVisitor joinVisitor,
-            AstToJSqlExpressionVisitor expressionVisitor,
-            AstToJSqlOrderByVisitor orderByVisitor,
-            AstToJSqlGroupByVisitor groupByVisitor
+    public BaseAstToJSqlSelectStatementVisitor(
+            BaseAstToJSqlSelectVisitor selectVisitor,
+            BaseAstToJSqlFromItemVisitor fromItemVisitor,
+            BaseAstToJSqlJoinVisitor joinVisitor,
+            BaseAstToJSqlExpressionVisitor expressionVisitor,
+            BaseAstToJSqlOrderByVisitor orderByVisitor,
+            BaseAstToJSqlGroupByVisitor groupByVisitor
     ) {
         this.selectVisitor = selectVisitor;
         this.fromItemVisitor = fromItemVisitor;
