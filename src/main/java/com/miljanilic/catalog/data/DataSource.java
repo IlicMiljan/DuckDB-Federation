@@ -1,18 +1,20 @@
 package com.miljanilic.catalog.data;
 
+import com.miljanilic.sql.SqlDialect;
+
 public class DataSource {
     private String jdbcUrl;
     private String jdbcUser;
     private String jdbcPassword;
-    private String jdbcDriver;
+    private SqlDialect dialect;
 
     public DataSource() {}
 
-    public DataSource(String jdbcUrl, String jdbcUser, String jdbcPassword, String jdbcDriver) {
+    public DataSource(String jdbcUrl, String jdbcUser, String jdbcPassword, SqlDialect dialect) {
         this.jdbcUrl = jdbcUrl;
         this.jdbcUser = jdbcUser;
         this.jdbcPassword = jdbcPassword;
-        this.jdbcDriver = jdbcDriver;
+        this.dialect = dialect;
     }
 
     public String getJdbcUrl() {
@@ -39,19 +41,19 @@ public class DataSource {
         this.jdbcPassword = jdbcPassword;
     }
 
-    public String getJdbcDriver() {
-        return jdbcDriver;
+    public SqlDialect getDialect() {
+        return dialect;
     }
 
-    public void setJdbcDriver(String jdbcDriver) {
-        this.jdbcDriver = jdbcDriver;
+    public void setDialect(SqlDialect dialect) {
+        this.dialect = dialect;
     }
 
     @Override
     public String toString() {
         return new StringBuilder()
                 .append("JDBC URL: ").append(jdbcUrl).append("\n")
-                .append("Driver: ").append(jdbcDriver)
+                .append("Dialect: ").append(dialect)
                 .toString();
     }
 }

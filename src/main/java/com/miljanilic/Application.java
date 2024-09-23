@@ -13,9 +13,10 @@ import com.miljanilic.planner.filter.ExecutionPlanFilter;
 import com.miljanilic.planner.filter.ExecutionPlanSchemaFilter;
 import com.miljanilic.planner.node.PlanNode;
 import com.miljanilic.planner.visitor.SchemaExtractingExecutionPlanVisitor;
+import com.miljanilic.sql.SqlDialect;
 import com.miljanilic.sql.ast.statement.SelectStatement;
 import com.miljanilic.sql.ast.statement.Statement;
-import com.miljanilic.sql.deparser.SqlDeParser;
+import com.miljanilic.sql.deparser.SqlDeParserResolver;
 import com.miljanilic.sql.parser.SqlParser;
 
 import java.sql.Connection;
@@ -29,7 +30,7 @@ public class Application {
     private final SqlParser sqlParser;
     private final ExecutionPlanner executionPlanner;
     private final ExecutionPlanStatementConverter executionPlanStatementConverter;
-    private final SqlDeParser sqlDeParser;
+    private final SqlDeParserResolver sqlDeParserResolver;
     private final ConcurrentSchemaQueryExecutor concurrentSchemaQueryExecutor;
     private final DuckDbTemporaryStorageResultSetConsumer duckDbTemporaryStorageResultSetConsumer;
     private final ResultSetPrinter resultSetPrinter;
@@ -39,7 +40,7 @@ public class Application {
             SqlParser sqlParser,
             ExecutionPlanner executionPlanner,
             ExecutionPlanStatementConverter executionPlanStatementConverter,
-            SqlDeParser sqlDeParser,
+            SqlDeParserResolver sqlDeParserResolver,
             ConcurrentSchemaQueryExecutor concurrentSchemaQueryExecutor,
             DuckDbTemporaryStorageResultSetConsumer duckDbTemporaryStorageResultSetConsumer,
             ResultSetPrinter resultSetPrinter
@@ -47,7 +48,7 @@ public class Application {
         this.sqlParser = sqlParser;
         this.executionPlanner = executionPlanner;
         this.executionPlanStatementConverter = executionPlanStatementConverter;
-        this.sqlDeParser = sqlDeParser;
+        this.sqlDeParserResolver = sqlDeParserResolver;
         this.concurrentSchemaQueryExecutor = concurrentSchemaQueryExecutor;
         this.duckDbTemporaryStorageResultSetConsumer = duckDbTemporaryStorageResultSetConsumer;
         this.resultSetPrinter = resultSetPrinter;
@@ -62,7 +63,7 @@ public class Application {
 
         try {
             Statement statement = sqlParser.parse(sql);
-            System.out.println("Parsed SQL: " + this.sqlDeParser.deparse(statement));
+            System.out.println("Parsed SQL: " + this.sqlDeParserResolver.resolve(SqlDialect.DEFAULT).deparse(statement));
 
 
             System.out.println("----------------");
@@ -73,7 +74,7 @@ public class Application {
             System.out.println("----------------");
 
             SelectStatement executionStatement = executionPlanStatementConverter.convert(planRoot);
-            System.out.println("Execution SQL: " + this.sqlDeParser.deparse(executionStatement));
+            System.out.println("Execution SQL: " + this.sqlDeParserResolver.resolve(SqlDialect.DEFAULT).deparse(executionStatement));
 
             System.out.println("----------------");
 
@@ -97,7 +98,7 @@ public class Application {
                 SelectStatement schemaFilteredExecutionStatement = executionPlanStatementConverter.convert(schemaFilteredPlanRoot);
                 schemaSelectStatementMap.put(schema, schemaFilteredExecutionStatement);
 
-                System.out.println("Schema Filtered SQL (" + schema.getName() + "): " + this.sqlDeParser.deparse(schemaFilteredExecutionStatement));
+                System.out.println("Schema Filtered SQL (" + schema.getName() + "): " + this.sqlDeParserResolver.resolve(schema.getDataSource().getDialect()).deparse(schemaFilteredExecutionStatement));
 
                 System.out.println("----------------");
             }
@@ -108,7 +109,7 @@ public class Application {
 
             SelectStatement schemaFilteredExecutionStatement = executionPlanStatementConverter.convert(schemaFilteredPlanRoot);
 
-            System.out.println("Aggregation SQL: " + this.sqlDeParser.deparse(schemaFilteredExecutionStatement));
+            System.out.println("Aggregation SQL: " + this.sqlDeParserResolver.resolve(SqlDialect.DUCKDB).deparse(schemaFilteredExecutionStatement));
 
             System.out.println("----------------");
 
@@ -119,7 +120,7 @@ public class Application {
 
                 try (
                         java.sql.Statement stmt = connection.createStatement();
-                        ResultSet rs = stmt.executeQuery("SELECT table_name FROM information_schema.tables")
+                        ResultSet rs = stmt.executeQuery("SELECT COUNT(DISTINCT oi_o.id) AS total_orders, SUM(oi_o.quantity * oi_o.price) AS total_order_value, AVG(oi_o.price) AS avg_price_per_product, COUNT(DISTINCT p.id) AS total_unique_products, COUNT(ua.id) AS total_activities, DATEDIFF('day', MAX(oi_o.order_date), MIN(oi_o.order_date)) AS days_between_first_and_last_order, ROUND(SUM(oi_o.quantity * oi_o.price) / COUNT(DISTINCT oi_o.id), 2) AS avg_order_value, ROUND(COUNT(ua.id) / DATEDIFF('day', MAX(oi_o.order_date), MIN(oi_o.order_date)), 2) AS avg_activities_per_day, ROUND(COUNT(DISTINCT oi_o.id) / DATEDIFF('day', MAX(oi_o.order_date), MIN(oi_o.order_date)), 2) AS orders_per_day, u.id AS user_id FROM order_items_orders oi_o INNER JOIN products p ON oi_o.product_id = p.id INNER JOIN users u ON oi_o.user_id = u.id LEFT JOIN user_activity ua ON u.id = ua.user_id GROUP BY u.id HAVING COUNT(DISTINCT oi_o.id) > 5 ORDER BY SUM(oi_o.quantity * oi_o.price) DESC LIMIT 10;")
                 ) {
                     this.resultSetPrinter.print(rs);
                 }

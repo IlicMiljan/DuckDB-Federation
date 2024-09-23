@@ -3,7 +3,7 @@ package com.miljanilic.executor;
 import com.google.inject.Inject;
 import com.miljanilic.catalog.data.Schema;
 import com.miljanilic.sql.ast.statement.SelectStatement;
-import com.miljanilic.sql.deparser.SqlDeParser;
+import com.miljanilic.sql.deparser.SqlDeParserResolver;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,20 +11,20 @@ import java.sql.Statement;
 import java.util.function.BiConsumer;
 
 public class SchemaQueryExecutor {
-    private final SqlDeParser sqlDeParser;
+    private final SqlDeParserResolver sqlDeParserResolver;
     private final DatabaseConnectionManager databaseConnectionManager;
 
     @Inject
     public SchemaQueryExecutor(
-            SqlDeParser sqlDeParser,
+            SqlDeParserResolver sqlDeParserResolver,
             DatabaseConnectionManager databaseConnectionManager
     ) {
-        this.sqlDeParser = sqlDeParser;
+        this.sqlDeParserResolver = sqlDeParserResolver;
         this.databaseConnectionManager = databaseConnectionManager;
     }
 
     public void execute(Schema schema, SelectStatement query, BiConsumer<SelectStatement, ResultSet> resultSetConsumer) {
-        String sql = sqlDeParser.deparse(query);
+        String sql = this.sqlDeParserResolver.resolve(schema.getDataSource().getDialect()).deparse(query);
 
         try (
                 Connection conn = databaseConnectionManager.getConnection(schema);
