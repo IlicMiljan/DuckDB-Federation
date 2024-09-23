@@ -22,7 +22,6 @@ public class RemoteJoinMapExecutionPlanVisitor implements ExecutionPlanVisitor<V
 
     @Override
     public Void visit(JoinNode node, Map<Table, com.miljanilic.sql.ast.node.Table> context) {
-        System.out.println("OK");
         if (node instanceof RemoteJoinNode remoteJoinNode) {
             if (remoteJoinNode.getLeft() instanceof RemoteScanNode leftScanNode && remoteJoinNode.getRight() instanceof RemoteScanNode rightScanNode) {
                 SortedSet<String> tableNames = new TreeSet<>();
