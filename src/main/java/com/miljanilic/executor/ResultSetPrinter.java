@@ -18,7 +18,7 @@ public class ResultSetPrinter {
 
         output.append("|");
         for (int i = 1; i <= columnCount; i++) {
-            output.append(String.format(" %-22s|", metaData.getColumnName(i)));
+            output.append(String.format(" %-22s|", metaData.getColumnName(i).length() > 20 ? metaData.getColumnName(i).substring(0, 20) : metaData.getColumnName(i)));
         }
         output.append("\n");
 
