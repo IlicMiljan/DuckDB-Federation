@@ -1,18 +1,14 @@
-package com.miljanilic.sql.deparser.visitor;
+package com.miljanilic.sql.deparser.visitor.base;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.miljanilic.sql.ast.node.OrderBy;
 import com.miljanilic.sql.ast.visitor.ASTVisitorAdapter;
 import net.sf.jsqlparser.statement.select.OrderByElement;
 
-@Singleton
-public class AstToJSqlOrderByVisitor extends ASTVisitorAdapter<OrderByElement, Void> {
+public abstract class BaseAstToJSqlOrderByVisitor extends ASTVisitorAdapter<OrderByElement, Void> {
 
-    private final AstToJSqlExpressionVisitor expressionVisitor;
+    private final BaseAstToJSqlExpressionVisitor expressionVisitor;
 
-    @Inject
-    public AstToJSqlOrderByVisitor(AstToJSqlExpressionVisitor expressionVisitor) {
+    public BaseAstToJSqlOrderByVisitor(BaseAstToJSqlExpressionVisitor expressionVisitor) {
         this.expressionVisitor = expressionVisitor;
     }
 

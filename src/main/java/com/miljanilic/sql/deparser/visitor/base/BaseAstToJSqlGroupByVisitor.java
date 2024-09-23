@@ -1,18 +1,14 @@
-package com.miljanilic.sql.deparser.visitor;
+package com.miljanilic.sql.deparser.visitor.base;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.miljanilic.sql.ast.node.GroupBy;
 import com.miljanilic.sql.ast.visitor.ASTVisitorAdapter;
 import net.sf.jsqlparser.expression.operators.relational.ExpressionList;
 import net.sf.jsqlparser.statement.select.GroupByElement;
 
-@Singleton
-public class AstToJSqlGroupByVisitor extends ASTVisitorAdapter<GroupByElement, Void> {
-    private final AstToJSqlExpressionVisitor expressionVisitor;
+public abstract class BaseAstToJSqlGroupByVisitor extends ASTVisitorAdapter<GroupByElement, Void> {
+    protected final BaseAstToJSqlExpressionVisitor expressionVisitor;
 
-    @Inject
-    public AstToJSqlGroupByVisitor(AstToJSqlExpressionVisitor expressionVisitor) {
+    public BaseAstToJSqlGroupByVisitor(BaseAstToJSqlExpressionVisitor expressionVisitor) {
         this.expressionVisitor = expressionVisitor;
     }
 

@@ -1,4 +1,4 @@
-package com.miljanilic.sql.deparser.visitor;
+package com.miljanilic.sql.deparser.visitor.base;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -21,11 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
-public class AstToJSqlExpressionVisitor extends ASTVisitorAdapter<Expression, Void> {
-    private final AstToJSqlFromItemVisitor fromItemVisitor;
+public abstract class BaseAstToJSqlExpressionVisitor extends ASTVisitorAdapter<Expression, Void> {
+    protected final BaseAstToJSqlFromItemVisitor fromItemVisitor;
 
     @Inject
-    public AstToJSqlExpressionVisitor(AstToJSqlFromItemVisitor fromItemVisitor) {
+    public BaseAstToJSqlExpressionVisitor(BaseAstToJSqlFromItemVisitor fromItemVisitor) {
         this.fromItemVisitor = fromItemVisitor;
     }
 
