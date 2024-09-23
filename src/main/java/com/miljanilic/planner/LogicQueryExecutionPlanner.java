@@ -148,7 +148,8 @@ public class LogicQueryExecutionPlanner extends ASTVisitorAdapter<PlanNode, Plan
                     left,
                     right,
                     join.getJoinType(),
-                    join.getConditions(), JoinNode.JoinAlgorithm.HASH_JOIN
+                    join.getConditions(),
+                    JoinNode.JoinAlgorithm.HASH_JOIN
             );
         }
 

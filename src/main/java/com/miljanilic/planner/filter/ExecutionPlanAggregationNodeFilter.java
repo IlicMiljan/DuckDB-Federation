@@ -1,6 +1,12 @@
 package com.miljanilic.planner.filter;
 
 import com.miljanilic.planner.node.*;
+import com.miljanilic.sql.ast.expression.Column;
+import com.miljanilic.sql.ast.expression.binary.EqualsTo;
+import com.miljanilic.sql.ast.node.Table;
+
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class ExecutionPlanAggregationNodeFilter extends ExecutionPlanFilterAdapter implements ExecutionPlanFilter {
 
@@ -34,13 +40,47 @@ public class ExecutionPlanAggregationNodeFilter extends ExecutionPlanFilterAdapt
 
     @Override
     public PlanNode visit(JoinNode node, PlanNode context) {
-        if (!(node instanceof RemoteJoinNode)) {
-            PlanNode left = node.getLeft().accept(this, context);
-            PlanNode right = node.getRight().accept(this, context);
+        if (node instanceof RemoteJoinNode remoteJoinNode) {
+            PlanNode left = remoteJoinNode.getLeft().accept(this, context);
+            PlanNode right = remoteJoinNode.getRight().accept(this, context);
 
-            if (left != null && right != null) {
-                return new JoinNode(left, right, node.getJoinType(), node.getCondition(), node.getAlgorithm());
+            if (left instanceof RemoteScanNode leftScanNode && right instanceof RemoteScanNode rightScanNode) {
+
+                SortedSet<String> tableNames = new TreeSet<>();
+                tableNames.add(leftScanNode.getFrom().getSchemaTable().getName());
+                tableNames.add(rightScanNode.getFrom().getSchemaTable().getName());
+
+                ScanNode leftLocalScanNode = new ScanNode(
+                        new Table(leftScanNode.getSchema(), null, String.join("_", tableNames), leftScanNode.getFrom().getSchemaTable().getName()),
+                        null
+                );
+
+                ScanNode rightLocalScanNode = new ScanNode(
+                        new Table(rightScanNode.getSchema(), null, String.join("_", tableNames), rightScanNode.getFrom().getSchemaTable().getName()),
+                        null
+                );
+
+                Table leftTable = new Table(leftScanNode.getSchema(), null, leftScanNode.getFrom().getSchemaTable().getName(), null);
+                Table rightTable = new Table(rightScanNode.getSchema(), null, rightScanNode.getFrom().getSchemaTable().getName(), null);
+
+                return new JoinNode(
+                        leftLocalScanNode,
+                        rightLocalScanNode,
+                        node.getJoinType(),
+                        new EqualsTo(
+                                new Column("id", leftTable),
+                                new Column("id", rightTable)
+                        ),
+                        node.getAlgorithm()
+                );
             }
+        }
+
+        PlanNode left = node.getLeft().accept(this, context);
+        PlanNode right = node.getRight().accept(this, context);
+
+        if (left != null && right != null) {
+            return new JoinNode(left, right, node.getJoinType(), node.getCondition(), node.getAlgorithm());
         }
 
         return visitChildren(node.getChildren(), context);
