@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Column extends Expression {
     private final String name;
-    private final From from;
+    private From from;
 
     public Column(String name, From from) {
         this.name = name;
@@ -20,6 +20,10 @@ public class Column extends Expression {
 
     public From getFrom() {
         return from;
+    }
+
+    public void setFrom(From from) {
+        this.from = from;
     }
 
     @Override
