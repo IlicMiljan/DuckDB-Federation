@@ -120,7 +120,7 @@ public class Application {
 
                 try (
                         java.sql.Statement stmt = connection.createStatement();
-                        ResultSet rs = stmt.executeQuery("SELECT COUNT(DISTINCT oi_o.id) AS total_orders, SUM(oi_o.quantity * oi_o.price) AS total_order_value, AVG(oi_o.price) AS avg_price_per_product, COUNT(DISTINCT p.id) AS total_unique_products, COUNT(ua.id) AS total_activities, DATEDIFF('day', MAX(oi_o.order_date), MIN(oi_o.order_date)) AS days_between_first_and_last_order, ROUND(SUM(oi_o.quantity * oi_o.price) / COUNT(DISTINCT oi_o.id), 2) AS avg_order_value, ROUND(COUNT(ua.id) / DATEDIFF('day', MAX(oi_o.order_date), MIN(oi_o.order_date)), 2) AS avg_activities_per_day, ROUND(COUNT(DISTINCT oi_o.id) / DATEDIFF('day', MAX(oi_o.order_date), MIN(oi_o.order_date)), 2) AS orders_per_day, u.id AS user_id FROM order_items_orders oi_o INNER JOIN products p ON oi_o.product_id = p.id INNER JOIN users u ON oi_o.user_id = u.id LEFT JOIN user_activity ua ON u.id = ua.user_id GROUP BY u.id HAVING COUNT(DISTINCT oi_o.id) > 5 ORDER BY SUM(oi_o.quantity * oi_o.price) DESC LIMIT 10;")
+                        ResultSet rs = stmt.executeQuery(this.sqlDeParserResolver.resolve(SqlDialect.DUCKDB).deparse(schemaFilteredExecutionStatement))
                 ) {
                     this.resultSetPrinter.print(rs);
                 }
