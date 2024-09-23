@@ -1,8 +1,6 @@
 package com.miljanilic.planner.filter;
 
 import com.miljanilic.planner.node.*;
-import com.miljanilic.sql.ast.expression.Column;
-import com.miljanilic.sql.ast.expression.binary.EqualsTo;
 import com.miljanilic.sql.ast.node.Table;
 
 import java.util.SortedSet;
@@ -50,28 +48,9 @@ public class ExecutionPlanAggregationNodeFilter extends ExecutionPlanFilterAdapt
                 tableNames.add(leftScanNode.getFrom().getSchemaTable().getName());
                 tableNames.add(rightScanNode.getFrom().getSchemaTable().getName());
 
-                ScanNode leftLocalScanNode = new ScanNode(
-                        new Table(leftScanNode.getSchema(), null, String.join("_", tableNames), leftScanNode.getFrom().getSchemaTable().getName()),
+                return new ScanNode(
+                        new Table(leftScanNode.getSchema(), null, String.join("_", tableNames), null),
                         null
-                );
-
-                ScanNode rightLocalScanNode = new ScanNode(
-                        new Table(rightScanNode.getSchema(), null, String.join("_", tableNames), rightScanNode.getFrom().getSchemaTable().getName()),
-                        null
-                );
-
-                Table leftTable = new Table(leftScanNode.getSchema(), null, leftScanNode.getFrom().getSchemaTable().getName(), null);
-                Table rightTable = new Table(rightScanNode.getSchema(), null, rightScanNode.getFrom().getSchemaTable().getName(), null);
-
-                return new JoinNode(
-                        leftLocalScanNode,
-                        rightLocalScanNode,
-                        node.getJoinType(),
-                        new EqualsTo(
-                                new Column("id", leftTable),
-                                new Column("id", rightTable)
-                        ),
-                        node.getAlgorithm()
                 );
             }
         }

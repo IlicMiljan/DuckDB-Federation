@@ -1,6 +1,7 @@
 package com.miljanilic.catalog.data;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Table {
@@ -53,6 +54,18 @@ public class Table {
     public enum TableType {
         TABLE,
         VIEW
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Table table)) return false;
+        return Objects.equals(name, table.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
     }
 
     @Override
