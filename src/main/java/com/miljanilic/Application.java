@@ -2,6 +2,7 @@ package com.miljanilic;
 
 import com.google.inject.Inject;
 import com.miljanilic.catalog.data.Schema;
+import com.miljanilic.catalog.data.Table;
 import com.miljanilic.executor.ConcurrentSchemaQueryExecutor;
 import com.miljanilic.executor.DuckDbTemporaryStorageResultSetConsumer;
 import com.miljanilic.executor.ResultSetPrinter;
@@ -12,10 +13,13 @@ import com.miljanilic.planner.filter.ExecutionPlanAggregationNodeFilter;
 import com.miljanilic.planner.filter.ExecutionPlanFilter;
 import com.miljanilic.planner.filter.ExecutionPlanSchemaFilter;
 import com.miljanilic.planner.node.PlanNode;
+import com.miljanilic.planner.visitor.ApplyRemoteJoinMapExecutionPlanVisitor;
+import com.miljanilic.planner.visitor.RemoteJoinMapExecutionPlanVisitor;
 import com.miljanilic.planner.visitor.SchemaExtractingExecutionPlanVisitor;
 import com.miljanilic.sql.SqlDialect;
 import com.miljanilic.sql.ast.statement.SelectStatement;
 import com.miljanilic.sql.ast.statement.Statement;
+import com.miljanilic.sql.ast.visitor.ASTFromReplacingVisitor;
 import com.miljanilic.sql.deparser.SqlDeParserResolver;
 import com.miljanilic.sql.parser.SqlParser;
 
@@ -103,15 +107,32 @@ public class Application {
                 System.out.println("----------------");
             }
 
-            ExecutionPlanFilter filter = new ExecutionPlanAggregationNodeFilter();
+            ExecutionPlanVisitor<Void, Map<Table, com.miljanilic.sql.ast.node.Table>> remoteJoinMapExtractor = new RemoteJoinMapExecutionPlanVisitor();
 
-            PlanNode schemaFilteredPlanRoot = filter.filter(planRoot);
+            Map<Table, com.miljanilic.sql.ast.node.Table> remoteJoinMap = new HashMap<>();
+            planRoot.accept(remoteJoinMapExtractor, remoteJoinMap);
 
-            SelectStatement schemaFilteredExecutionStatement = executionPlanStatementConverter.convert(schemaFilteredPlanRoot);
-
-            System.out.println("Aggregation SQL: " + this.sqlDeParserResolver.resolve(SqlDialect.DUCKDB).deparse(schemaFilteredExecutionStatement));
+            for (Map.Entry<Table, com.miljanilic.sql.ast.node.Table> entry: remoteJoinMap.entrySet()) {
+                System.out.println(entry.getKey().getName() + " -> " + entry.getValue().getName());
+            }
 
             System.out.println("----------------");
+
+//            ExecutionPlanFilter filter = new ExecutionPlanAggregationNodeFilter();
+//
+//            PlanNode schemaFilteredPlanRoot = filter.filter(planRoot);
+//
+//            ExecutionPlanVisitor<Void, Void> applyRemoteJoinMap = new ApplyRemoteJoinMapExecutionPlanVisitor(
+//                    new ASTFromReplacingVisitor(remoteJoinMap)
+//            );
+//
+//            schemaFilteredPlanRoot.accept(applyRemoteJoinMap, null);
+//
+//            SelectStatement schemaFilteredExecutionStatement = executionPlanStatementConverter.convert(schemaFilteredPlanRoot);
+//
+//            System.out.println("Aggregation SQL: " + this.sqlDeParserResolver.resolve(SqlDialect.DUCKDB).deparse(schemaFilteredExecutionStatement));
+//
+//            System.out.println("----------------");
 
             try (Connection connection = DriverManager.getConnection("jdbc:duckdb:tmp/database.db")) {
                 concurrentSchemaQueryExecutor.executeAll(schemaSelectStatementMap, (selectStatement, resultSet) -> {
@@ -120,8 +141,25 @@ public class Application {
 
                 try (
                         java.sql.Statement stmt = connection.createStatement();
-                        ResultSet rs = stmt.executeQuery(this.sqlDeParserResolver.resolve(SqlDialect.DUCKDB).deparse(schemaFilteredExecutionStatement))
                 ) {
+                    ExecutionPlanFilter filter = new ExecutionPlanAggregationNodeFilter();
+
+                    PlanNode schemaFilteredPlanRoot = filter.filter(planRoot);
+
+                    ExecutionPlanVisitor<Void, Void> applyRemoteJoinMap = new ApplyRemoteJoinMapExecutionPlanVisitor(
+                            new ASTFromReplacingVisitor(remoteJoinMap)
+                    );
+
+                    schemaFilteredPlanRoot.accept(applyRemoteJoinMap, null);
+
+                    SelectStatement schemaFilteredExecutionStatement = executionPlanStatementConverter.convert(schemaFilteredPlanRoot);
+
+                    System.out.println("Aggregation SQL: " + this.sqlDeParserResolver.resolve(SqlDialect.DUCKDB).deparse(schemaFilteredExecutionStatement));
+
+                    ResultSet rs = stmt.executeQuery(this.sqlDeParserResolver.resolve(SqlDialect.DUCKDB).deparse(schemaFilteredExecutionStatement));
+
+                    System.out.println("----------------");
+
                     this.resultSetPrinter.print(rs);
                 }
             }
